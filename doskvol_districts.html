@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blades in the Dark ダスクヴォール12地区ガイド 日本語版</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #EBEBEB;
+      --surface: #F7F7F7;
+      --surface-alt: #DFDFDF;
+      --text: #1F1F1F;
+      --text-muted: #525252;
+      --header-bg: #262626;
+      --header-text: #F2F2F2;
+      --accent: #8B1A1A;
+      --accent-hover: #6B1212;
+      --accent-text: #8B1A1A;
+      --accent-fg: #F7F7F7;
+      --border: #C4C4C4;
+      --border-strong: #262626;
+      --pip-empty: #C4C4C4;
+      --sidebar-width: 268px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #181818;
+      --surface: #222222;
+      --surface-alt: #2C2C2C;
+      --text: #E6E6E6;
+      --text-muted: #B0B0B0;
+      --header-bg: #111111;
+      --header-text: #EBEBEB;
+      --accent: #8B1A1A;
+      --accent-hover: #A32424;
+      --accent-text: #D97373;
+      --accent-fg: #F2F2F2;
+      --border: #3B3B3B;
+      --border-strong: #666666;
+      --pip-empty: #4D4D4D;
+    }
+
+    * {
+      box-sizing: border-box;
+      border-radius: 0 !important;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-weight: 400;
+      line-height: 1.75;
+      background-color: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-shell {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background-color: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-brand {
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      padding: 24px 20px 20px;
+      border-bottom: 4px solid var(--accent);
+    }
+
+    .sidebar-brand-sub {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: #B8B8B8;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-brand-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      line-height: 1.3;
+      letter-spacing: 0.02em;
+    }
+
+    .sidebar-brand-ver {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 2px 8px;
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .sidebar-controls {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .theme-btn {
+      width: 100%;
+      padding: 8px 12px;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      background-color: var(--surface-alt);
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .theme-btn:hover {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      border-color: var(--accent);
+    }
+
+    .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 14px 0 32px;
+      flex: 1;
+    }
+
+    .nav-group-label {
+      padding: 12px 20px 6px;
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: var(--accent-text);
+      text-transform: uppercase;
+    }
+
+    .nav-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 6px 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      transition: background-color 0.12s ease, border-color 0.12s ease;
+    }
+
+    .nav-link:hover {
+      background-color: var(--surface-alt);
+      border-left-color: var(--accent);
+    }
+
+    .nav-link.active {
+      background-color: var(--surface-alt);
+      border-left-color: var(--accent);
+      font-weight: 700;
+      color: var(--accent-text);
+    }
+
+    .nav-en {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* Mobile Header */
+    .mobile-header {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      border-bottom: 3px solid var(--accent);
+      padding: 12px 16px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .mobile-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .mobile-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .icon-btn {
+      padding: 6px 12px;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      border: 1px solid var(--accent);
+      cursor: pointer;
+    }
+
+    .menu-btn {
+      background-color: transparent;
+      color: var(--header-text);
+      border: 1px solid #666666;
+    }
+
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.55);
+      z-index: 95;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      min-width: 0;
+      padding: 36px 40px 72px;
+      max-width: 1240px;
+    }
+
+    [id] {
+      scroll-margin-top: 24px;
+    }
+
+    .sheet-section {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      margin-bottom: 44px;
+      padding: 32px;
+    }
+
+    .sheet-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px 16px;
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+      border-bottom: 3px solid var(--border-strong);
+    }
+
+    .sheet-title-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+    }
+
+    .sheet-page-tag {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      padding: 4px 10px;
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .sheet-title {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      line-height: 1.25;
+    }
+
+    .sheet-title-en {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-left: 8px;
+      text-transform: uppercase;
+    }
+
+    .sheet-meta {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* Media Grid (Cityscape + Map) */
+    .media-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .media-frame {
+      margin: 0;
+      border: 1px solid var(--border-strong);
+      background-color: var(--surface-alt);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .media-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .media-caption {
+      padding: 6px 10px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Two-column Content Grid */
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .col-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .prose-block {
+      margin-bottom: 0;
+    }
+
+    .prose-heading-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px 12px;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 5px;
+      margin-bottom: 12px;
+    }
+
+    .prose-heading {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+
+    .ref-badge {
+      background-color: var(--surface-alt);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .prose-block p {
+      margin: 0 0 10px;
+      font-size: 0.93rem;
+    }
+
+    .quote-box {
+      padding: 12px 16px;
+      background-color: var(--surface-alt);
+      border-left: 4px solid var(--accent);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Landmarks List */
+    .landmark-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .landmark-item {
+      background-color: var(--surface-alt);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+    }
+
+    .landmark-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .pin-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      border-bottom: 3px solid var(--accent);
+      font-size: 0.82rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .landmark-desc {
+      margin: 0;
+      font-size: 0.89rem;
+    }
+
+    /* Ratings Box */
+    .ratings-box {
+      background-color: var(--surface-alt);
+      border: 1px solid var(--border-strong);
+      border-top: 4px solid var(--accent);
+      padding: 14px 16px;
+    }
+
+    .rating-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .rating-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .rating-row:first-child {
+      padding-top: 0;
+    }
+
+    .pips {
+      display: inline-flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .pip {
+      width: 12px;
+      height: 12px;
+      background-color: var(--pip-empty);
+      border: 1px solid var(--border-strong);
+      display: inline-block;
+    }
+
+    .pip.filled {
+      background-color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Details KV */
+    .kv-box {
+      border: 1px solid var(--border);
+      background-color: var(--surface-alt);
+    }
+
+    .kv-row {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .kv-row:last-child {
+      border-bottom: none;
+    }
+
+    .kv-key {
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      padding: 8px 10px;
+      font-size: 0.8rem;
+      font-weight: 900;
+      border-left: 4px solid var(--accent);
+      display: flex;
+      align-items: center;
+    }
+
+    .kv-val {
+      padding: 8px 12px;
+      font-size: 0.88rem;
+    }
+
+    /* Notables List */
+    .notables-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .notables-list li {
+      padding: 10px 12px;
+      background-color: var(--surface-alt);
+      border-left: 3px solid var(--border-strong);
+      font-size: 0.88rem;
+    }
+
+    .notables-list li strong {
+      font-weight: 900;
+      color: var(--accent-text);
+    }
+
+    /* Summary Comparison Table */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    .ref-table th,
+    .ref-table td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .ref-table th {
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      font-weight: 900;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    .ref-table tr:nth-child(even) td {
+      background-color: var(--surface-alt);
+    }
+
+    .table-link {
+      color: var(--accent-text);
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .table-link:hover {
+      text-decoration: underline;
+    }
+
+    .doc-footer {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    @media (max-width: 1060px) {
+      .two-col-grid,
+      .media-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      [id] {
+        scroll-margin-top: 68px;
+      }
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+        width: min(84vw, 300px);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .sidebar-backdrop.open {
+        display: block;
+      }
+      .mobile-header {
+        display: flex;
+      }
+      .icon-btn {
+        min-height: 36px;
+      }
+      .nav-link {
+        padding: 9px 20px;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 16px 12px 48px;
+      }
+      .sheet-section {
+        padding: 18px 14px;
+        margin-bottom: 28px;
+      }
+      .sheet-title {
+        font-size: 1.3rem;
+      }
+      .sheet-title-en {
+        display: block;
+        margin-left: 0;
+        margin-top: 2px;
+        font-size: 0.84rem;
+      }
+      .kv-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-header">
+    <div class="mobile-title">ダスクヴォール 12地区ガイド</div>
+    <div class="mobile-actions">
+      <button type="button" class="icon-btn" id="mobileThemeBtn" aria-label="配色切り替え">配色切替</button>
+      <button type="button" class="icon-btn menu-btn" id="menuToggleBtn" aria-label="目次を開く">目次</button>
+    </div>
+  </div>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="地区ナビゲーション">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-sub">BLADES IN THE DARK</div>
+        <div class="sidebar-brand-title">ダスクヴォール<br>12地区ガイド</div>
+        <span class="sidebar-brand-ver">DOSKVOL DISTRICTS</span>
+      </div>
+
+      <div class="sidebar-controls">
+        <button type="button" class="theme-btn" id="desktopThemeBtn">
+          <span>表示モード</span>
+          <span id="themeLabel">LIGHT</span>
+        </button>
+      </div>
+
+      <ul class="nav-list">
+        <li class="nav-group-label">一覧</li>
+        <li><a class="nav-link active" href="#overview"><span>12地区ステータス比較</span><span class="nav-en">OVERVIEW</span></a></li>
+
+        <li class="nav-group-label">地区ガイド（A–Z）</li>
+        <li><a class="nav-link" href="#dist-barrowcleft"><span>バロウクレフト</span><span class="nav-en">Barrowcleft</span></a></li>
+        <li><a class="nav-link" href="#dist-brightstone"><span>ブライトストーン</span><span class="nav-en">Brightstone</span></a></li>
+        <li><a class="nav-link" href="#dist-charhollow"><span>チャーホロウ</span><span class="nav-en">Charhollow</span></a></li>
+        <li><a class="nav-link" href="#dist-charterhall"><span>チャーターホール</span><span class="nav-en">Charterhall</span></a></li>
+        <li><a class="nav-link" href="#dist-coalridge"><span>コールリッジ</span><span class="nav-en">Coalridge</span></a></li>
+        <li><a class="nav-link" href="#dist-crowsfoot"><span>クロウズ・フット</span><span class="nav-en">Crow's Foot</span></a></li>
+        <li><a class="nav-link" href="#dist-thedocks"><span>ザ・ドックス</span><span class="nav-en">The Docks</span></a></li>
+        <li><a class="nav-link" href="#dist-dunslough"><span>ダンスラウ</span><span class="nav-en">Dunslough</span></a></li>
+        <li><a class="nav-link" href="#dist-nightmarket"><span>ナイトマーケット</span><span class="nav-en">Nightmarket</span></a></li>
+        <li><a class="nav-link" href="#dist-silkshore"><span>シルクショア</span><span class="nav-en">Silkshore</span></a></li>
+        <li><a class="nav-link" href="#dist-sixtowers"><span>シックス・タワーズ</span><span class="nav-en">Six Towers</span></a></li>
+        <li><a class="nav-link" href="#dist-whitecrown"><span>ホワイトクラウン</span><span class="nav-en">Whitecrown</span></a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+
+      <!-- ================= OVERVIEW TABLE ================= -->
+      <section class="sheet-section" id="overview">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">一覧表</span>
+            <h1 class="sheet-title">ダスクヴォール 12地区 比較表<span class="sheet-title-en">DOSKVOL DISTRICTS OVERVIEW</span></h1>
+          </div>
+          <div class="sheet-meta">BLADES IN THE DARK SHEETS, v8.2</div>
+        </header>
+
+        <div class="table-wrap">
+          <table class="ref-table">
+            <thead>
+              <tr>
+                <th>地区名</th>
+                <th>富</th>
+                <th>治安・安全</th>
+                <th>犯罪影響</th>
+                <th>神秘影響</th>
+                <th>地区の特徴・特殊ルール</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a class="table-link" href="#dist-barrowcleft">バロウクレフト (Barrowcleft)</a></td>
+                <td>1 / 4</td><td>3 / 4</td><td>0 / 4</td><td>0 / 4</td>
+                <td>農業・食糧生産区。資産獲得+1dだが悪名+2。</td>
+              </tr>
+              <tr>
+                <td><a class="table-link" href="#dist-brightstone">ブライトストーン (Brightstone)</a></td>
+                <td>4 / 4</td><td>4 / 4</td><td>0 / 4</td><td>2 / 4</td>
+                <td>貴族・富裕層区。エンゲージメント-1d、貴族相手は敵地扱い（悪名増）。</td>
+              </tr>
+              <tr>
+                <td><a class="table-link" href="#dist-charhollow">チャーホロウ (Charhollow)</a></td>
+                <td>0 / 4</td><td>2 / 4</td><td>1 / 4</td><td>0 / 4</td>
+                <td>労働者・相互扶助の街。市民相手は敵地扱い（悪名増）。</td>
+              </tr>
+              <tr>
+                <td><a class="table-link" href="#dist-charterhall">チャーターホール (Charterhall)</a></td>
+                <td>4 / 4</td><td>4 / 4</td><td>0 / 4</td><td>0 / 4</td>
+                <td>行政・大学区。悪名1を代償に情報収集+1dの悪魔の取引可。</td>
+              </tr>
+              <tr>
+                <td><a class="table-link" href="#dist-coalridge">コールリッジ (Coalridge)</a></td>
+                <td>1 / 4</td><td>1 / 4</td><td>1 / 4</td><td>0 / 4</td>
+                <td>炭鉱・工場地帯。24時間稼働だが監督官は賄賂に弱い。</td>
+              </tr>
+              <tr>
+                <td><a class="table-link" href="#dist-crowsfoot">クロウズ・フット (Crow's Foot)</a></td>
+                <td>2 / 4</td><td>1 / 4</td><td>4 / 4</td><td>2 / 4</td>
+                <td>ギャング抗争の十字路。暴力行為+1dの悪魔の取引可（幽霊が暴れる）。</td>
+              </tr>
+              <tr>
+                <td><a class="table-link" href="#dist-thedocks">ザ・ドックス (The Docks)</a></td>
+                <td>2 / 4</td><td>2 / 4</td><td>2 / 4</td><td>2 / 4</td>
+                <td>古き港湾・リヴァイアサン・ハンター船の拠点。</td>
+              </tr>
+              <tr>
+                <td><a class="table-link" href="#dist-dunslough">ダンスラウ (Dunslough)</a></td>
+                <td>0 / 4</td><td>0 / 4</td><td>2 / 4</td><td>1 / 4</td>
+                <td>極貧スラムとアイアンフック監獄・労働キャンプ。</td>
+              </tr>
+              <tr>
+                <td><a class="table-link" href="#dist-nightmarket">ナイトマーケット (Nightmarket)</a></td>
+                <td>3 / 4</td><td>3 / 4</td><td>2 / 4</td><td>1 / 4</td>
+                <td>新興富裕層と闇市場。2ストレス消費で資産獲得+1d。</td>
+              </tr>
+              <tr>
+                <td><a class="table-link" href="#dist-silkshore">シルクショア (Silkshore)</a></td>
+                <td>2 / 4</td><td>2 / 4</td><td>3 / 4</td><td>1 / 4</td>
+                <td>運河と赤ランプの歓楽街。ここで耽溺すると次回当地の悪癖+1d。</td>
+              </tr>
+              <tr>
+                <td><a class="table-link" href="#dist-sixtowers">シックス・タワーズ (Six Towers)</a></td>
+                <td>2 / 4</td><td>1 / 4</td><td>2 / 4</td><td>3 / 4</td>
+                <td>没落貴族の廃墟と霊域。空き家が多く悪党の隠れ家に最適。</td>
+              </tr>
+              <tr>
+                <td><a class="table-link" href="#dist-whitecrown">ホワイトクラウン (Whitecrown)</a></td>
+                <td>4 / 4</td><td>4 / 4</td><td>1 / 4</td><td>2 / 4</td>
+                <td>総督府と学院の島。エンゲージメント-2d、貴族相手は敵地扱い。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ================= 1. BARROWCLEFT ================= -->
+      <section class="sheet-section" id="dist-barrowcleft">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 01</span>
+            <h1 class="sheet-title">バロウクレフト<span class="sheet-title-en">BARROWCLEFT</span></h1>
+          </div>
+          <div class="sheet-meta">農村・食糧生産区</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p37_barrowcleft.png" alt="バロウクレフトの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p36_barrowcleft_map.png" alt="バロウクレフトの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>バロウクレフトは、ダスクヴォールの放射エネルギー農場（Radiant energy farms）を管理する糧食省（Ministry of Provisions）の労働者や監督官たちが暮らす地区である。埃っぽい田園地帯であり、1〜2階建ての質素な木造建築が並び、大型の荷馬車が行き交えるよう幅広の未舗装路が通っている。バロウクレフトの農民たちは結束の固い家族ベースの氏族（クラン）を形成しており、都市の存続に不可欠な役割を担っていることに誇りを抱き、川の向こうの「都会者（シティ・フォーク）」とは一線を画している。誠実な商取引のためならよそ者も歓迎されるが、それ以外の目的で訪れる者には冷ややかな疑惑の目が向けられる。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>バロウ橋（Barrow Bridge）</div>
+                  <p class="landmark-desc">市内にいくつかある住居付き橋梁の1つ。橋の上には住居、商店、露店が軒を連ねている。両岸の粗末な木造小屋では川漁師の一家が働いており、海へ通じる水路付近にゴミを漁りに集まる、大型で危険な野生の川ウナギを狩っている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>雷撃塔（Lightning Tower）</div>
+                  <p class="landmark-desc">ダスクヴォールの雷撃塔はエレクトロプラズム工学の驚異であり、強大なスパークライト（Sparkwrights）ギルドによる絶え間ない保守を必要とする。最大の塔は高さ400フィート（約120m）を超え、デスランズの飢えた霊魂を街の外に締め出す雷撃障壁（ライトニング・バリア）へ電力を供給するための発電機を内蔵している。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>バロウクレフト市場（Barrowcleft Market）</div>
+                  <p class="landmark-desc">農園で採れた新鮮な農産物や加工品を販売する青空市場。醸造家、蒸留酒造り、織り手、染色工、ヤギ飼いなど関連業者も集まっている。屈強で結束の固いバロウクレフトの住民たちは犯罪組織の影響力を市場から締め出すことに成功しており、この街では珍しく公正な取引が行われる場所として名高い。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>放射エネルギー農場（Radiant Energy Farm）</div>
+                  <p class="landmark-desc">放射エネルギーの驚くべき力によって、ダスクヴォールの暗闇の中でも作物を育てることができる。街の生命線はこの農場にかかっているため、繊細な放射ランプと灌漑システムは、特別に任命された警備隊の副官と糧食省の監督官によって昼夜監視されている。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip filled"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="quote-box">
+              <strong>地区ルール：</strong>バロウクレフト市場は市内有数の優良な市場だが、犯罪者めいた連中は望まぬ注目を大量に集めてしまう。ここで「資産の獲得」を行う際は <strong>+1d</strong> を得られるが、同時に <strong>+2悪名（Heat）</strong>を受ける。
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">農作業を行き来する農民たち。素朴な品を作る職人。品を売る商人。食糧を積んで街へ向かう重い荷馬車。監視塔から畑を見張る油断ない治安副官たち。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">踏み固められた土道、排水溝、大型荷車用の中央石畳道路。ブラックヒル通り、ミル通り、ポーター通り。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">低く幅広の木造建築、納屋、家畜小屋、石造りの水車小屋、監督官用の丘上の邸宅。バロウ橋沿いの密集したアパート・塔・露店群。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>プリチャード主任監督官（Chief Prichard）</strong>：ダスクヴォールにおける糧食省の筆頭監督官。各地区への労働者と食糧配給を管理している。（計算高い、自信家、冷静）</li>
+                <li><strong>ヘスター・ヴェイル（Hester Vale）</strong>：最古の農家一族の女家長。「厳格だが公正」を絵に描いたような人物。（誇り高い、激しい、疑り深い）</li>
+                <li><strong>マーラ・キール（Mara Keel）</strong>：バロウクレフトの農業労働者の中に身を潜めている元密輸業者。（寡黙、秘密主義、忍耐強い）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 2. BRIGHTSTONE ================= -->
+      <section class="sheet-section" id="dist-brightstone">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 02</span>
+            <h1 class="sheet-title">ブライトストーン<span class="sheet-title-en">BRIGHTSTONE</span></h1>
+          </div>
+          <div class="sheet-meta">貴族・大富豪の居住区</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p39_brightstone.png" alt="ブライトストーンの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p38_brightstone_map.png" alt="ブライトストーンの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>ブライトストーンは、ダスクヴォールで最も裕福かつ影響力のある市民たちの多くが暮らす地区だ。通りは広く舗装され、明るい電灯に照らされている。運河は澄んで清潔で香料が撒かれており、邸宅はすべて上質な淡色の大理石ブロック、重厚な木材、精緻な鉄細工で造られている。放射エネルギーで育まれた手入れの行き届いた公園、豪奢なレストランやカフェ、宝石商や仕立て屋などの高級店が立ち並ぶ。露店商は禁止されているため、時折通る馬車や行進するブルーコートの巡回隊を除けば、穏やかで広々とした空気が漂っている。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>統一公園（Unity Park）</div>
+                  <p class="landmark-desc">統一戦争（Unity War――誰に聞くかによっては「スコヴランド独立戦争」）における帝国の勝利を記念した巨大なモニュメントを擁する、壮麗な公園・噴水・ロータリー。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>銀市場（Silver Market）</div>
+                  <p class="landmark-desc">ノース・フック海峡を見下ろす厳選された青空高級市場。かつて銀取引の主要市場だったことに由来し、現在は希少なイルヴィア産の絹織物、ダガー諸島の香辛料、馬商、馬車内装師、希少な錬金術蒸留液（市警備隊が見て見ぬふりをする違法な霊魂エッセンスも含む）などあらゆる贅沢品を扱う。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>至聖所（The Sanctorium）</div>
+                  <p class="landmark-desc">「肉体の歓喜の教会（Church of the Ecstasy of the Flesh）」の総本山大聖堂。約500年前に皇帝がダスクヴォールを最後に訪れた際、自ら建立を命じた控え壁と尖塔のそびえる巨大建造物である。信徒たちは毎週集い、洗礼の儀式と、エレクトロプラズムによる野良霊魂の儀式的消滅を通じて自らを清める。地下墓地には名高く裕福な市民たちの遺灰が納められている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>ボウモア橋（Bowmore Bridge）</div>
+                  <p class="landmark-desc">輝く白い石と煌めく金属細工で造られたこの巨大建造物は、帝国最大の橋と言われている。ブライトストーンからホワイトクラウンへと至る全長にわたり、高級アパートと商店がずらりと並んでいる。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="quote-box">
+              <strong>地区ルール：</strong>厳重なブルーコートの巡回により、ほとんどのエンゲージメント・ロールは <strong>-1d</strong> のペナルティを受ける。ブライトストーンで貴族を標的にした作戦は、悪名（Heat）発生において<strong>「敵対勢力の縄張り（Hostile turf）」</strong>とみなされる。
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">上質な防具と輝く銃槍で武装した精鋭ブルーコートの巡回隊。使用人を従え整った公園を散歩する富裕層。大通りを走る馬車や時折見かけるエレクトロプラズム馬車。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">広く、清潔で、明るい。シルバーマーク大通り、ゴールドクレスト大通り、ルビー通り、サファイア通り。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">雷撃障壁を備えた淡色石造の豪邸、大邸宅（マナーハウス）、豪華なタウンハウス、豪奢な劇場・レストラン、高級商店。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>ストラングフォード卿（Lord Strangford）</strong>：最大規模のリヴァイアサン・ハンター船団の1つを運営し、市議会議員を務め、歓喜の教会内の秘密結社の高位メンバーでもある。（秘密主義、計算高い、尊大）</li>
+                <li><strong>ボウモア司令官（Commander Bowmore）</strong>：ブライトストーンの治安警備隊最高責任者。何世紀も前にボウモア橋の建設に出資した一族であり、今も多くの要職を握る。（誇り高い、信念がある、顔が広い）</li>
+                <li><strong>ロラン・ウォット（Rolan Wott）</strong>：不動産・寄付金・金融訴訟を扱う有力な治安判事。豪華なパーティーを開くことで有名。（洒落ている、選民意識が強い、抜け目ない）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 3. CHARHOLLOW ================= -->
+      <section class="sheet-section" id="dist-charhollow">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 03</span>
+            <h1 class="sheet-title">チャーホロウ<span class="sheet-title-en">CHARHOLLOW</span></h1>
+          </div>
+          <div class="sheet-meta">労働者・庶民の密集区</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p41_charhollow.png" alt="チャーホロウの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p40_charhollow_map.png" alt="チャーホロウの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>この過密な地区には、街の労働力の大部分――使用人、港湾労働者、船乗り、家畜囲いやウナギ養殖場の作業員、辻馬車の御者など――が暮らしている。家賃は安く、騒がしく、狭苦しく、炊事の火や噴き出す蒸気管で蒸し暑いが、住民たちの間には他では見られない家族のような連帯感がある。チャーホロウの人々は境遇によって集まったものの、街の他の場所で当たり前になっている弱肉強食の冷酷さとは対照的に、互いに支え合い気遣い合う絆で結ばれた真の共同体を築いている。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>ザ・シーツ（The Sheets）</div>
+                  <p class="landmark-desc">洗濯夫、仕立て屋、お針子たちが集まる一角で、建物間の路地は彼らの商売道具であるはためく布地で埋め尽くされている。労働者階級による無政府主義者たちの秘密結社がここで会合を開き、革命の計画を練っている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>ストラングフォード邸（Strangford House）</div>
+                  <p class="landmark-desc">強大なストラングフォード家の、柵に囲まれた壮麗な邸宅がチャーホロウを見下ろす私有島の丘に建っている。この地区の住民の多くはストラングフォードの工場や労役場で働いており、丘の上の屋敷をチラリと見るたびに呪いの視線（邪視）を投げかけずにはいられない。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>チャーホロウ市場（Charhollow Market）</div>
+                  <p class="landmark-desc">開けた広場を埋め尽くす公設市場。地元コミュニティに向けて公正な価格とまともな品物を提供している。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>ケレンズ（Kellen's）</div>
+                  <p class="landmark-desc">市内最古のパブの1つで、目の回るほど豊富なスコヴランドのエールとウイスキーを揃えている。貧富を問わず客が肩を並べ、酒とともに伝統料理と音楽を楽しんでいるが、近頃は覆面をした反スコヴランド人種差別主義者たちの標的にされ、「スコヴは出ていけ！」と叫びながら店を荒らしたり客に暴行を加えたりする事件が起きている。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="quote-box">
+              <strong>地区ルール：</strong>チャーホロウの一般市民を標的にした作戦は、悪名（Heat）発生において<strong>「敵対勢力の縄張り（Hostile turf）」</strong>とみなされる。
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">仕事帰りの労働者たちが友人や家族に挨拶を叫び合う。共同の炊事場の火を囲んで料理し食べる人々。かくれんぼや幽霊ごっこをして走り回る子どもたち。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">粗削りな石段が刻まれた急勾配の坂、曲がりくねった路地、土道と石畳。ブリッジ・ロード、カナル通り、ヒル通り。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">積み重なった1〜2部屋の住居、安長屋、ボロボロのアパート、使い込まれた酒場とパブ。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>ハットン（Hutton）</strong>：スコヴランド難民で元兵士。現在は帝国におけるスコヴランド人の権利を政府に認めさせることを目指す無政府主義革命運動のリーダー。（勇敢、慈悲深い、賢明）</li>
+                <li><strong>ブリッグス（Briggs）</strong>：チャーホロウ市場の露店店主だが、それはこの地区の労働者階級の間に張り巡らされた噂屋・スパイ・暗号職人ネットワークの隠れ蓑であり、必要とする者にその働きを売っている。（秘密主義、抜け目ない、慎重）</li>
+                <li><strong>コーベン（Corben）</strong>：帝国に対する罪で逃亡中の元スコヴランド軍人。（タフ、無謀）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 4. CHARTERHALL ================= -->
+      <section class="sheet-section" id="dist-charterhall">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 04</span>
+            <h1 class="sheet-title">チャーターホール<span class="sheet-title-en">CHARTERHALL</span></h1>
+          </div>
+          <div class="sheet-meta">行政・金融・大学区</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p43_charterhall.png" alt="チャーターホールの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p42_charterhall_map.png" alt="チャーターホールの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>チャーターホールは、大災厄（カタクリズム）以前の時代においてこの街で最初に大規模建築が行われた場所である。帝国初の雷撃障壁が築かれた古い城壁は、今も地区の周囲に半ば崩れた遺跡として残っている。現在この一帯には裁判所、許認可・税務局、銀行、公文書館といった政府の行政機関が集まっている。市の役人やチャーターホール大学の学生たちのほか、自らの富を目の届く範囲に置いて暮らすことを好む帝国産業の重鎮たちもここに居を構えている。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>チャーター城壁（Charter Wall）</div>
+                  <p class="landmark-desc">古い城壁の廃墟沿いには芸術家コロニーが広がっている。音楽や彫刻を愛するボヘミアンな学生たちは、通常特定のパトロンや一族の庇護を受け、技を磨いてパトロンの教養のために芸術を生み出すことを期待されている。こうしたロマンチストな魂は、ダスクヴォールが提供するあらゆる悪徳の泉に飲み込まれてしまうことも多い。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>クラーク通り（Clerk Street）</div>
+                  <p class="landmark-desc">地区の目抜き通りにはあらゆる種類の威圧的な政府庁舎が並び、いずれも高い鉄柵の奥に構えている。歩道を巡回するブルーコートと、王室保有地を警備する儀礼的な帝国騎兵隊が混在して警備にあたっている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>ジャヤン公園（Jayan Park）</div>
+                  <p class="landmark-desc">公園の名を冠された偉大な錬金術師は、太陽光も放射エネルギーもなしに本物の樹木を育てられる土壌と種子を生み出した。それらはあらゆる生物にとって恐ろしい猛毒であり決して触れてはならないが、100年以上経った今も美しく生い茂っている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>チャーターホール大学（Charterhall University）</div>
+                  <p class="landmark-desc">十数棟の建物が、地味に見えて実は格式高いこの教育機関の教室や学生寮へと改装されている。スパーククラフトの専門家を育成する巨大な「スパークライトの塔」が地区の上にそびえ立ち、激しい実習の際にはしばしば炎と煙を噴き上げる。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="quote-box">
+              <strong>地区ルール：</strong>チャーターホールに保管された公的記録は、犯罪者にとって格別の価値がある。ここで情報収集を行う際、<strong>1悪名（Heat）</strong>と引き換えに <strong>+1d</strong> を得る悪魔の取引（Devil's Bargain）を選べる（ブルーコートは常に悪党を見張っている）。
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">公文書がはち切れそうに詰まった鞄を抱えて行き交う書記官や役人たち。甲冑を鳴らす私設護衛を連れた重厚な馬車で通り過ぎる裕福な銀行家。街角のカフェでイルヴィア政治やダガー諸島の部族系譜などを論じ合う学生たち。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">広く、清潔で、明るい。クラーク通り、ジャヤン通り、ダルモア大通り、帝国大通り。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">威厳ある円柱と古典彫刻の装飾を備えた堂々たる石造建築。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>レディ・ドレイク（Lady Drake）</strong>：街の犯罪に対して「話がわかる」治安判事――ただし違反者の財布が十分に厚ければの話だが。（柔軟、抜け目ない）</li>
+                <li><strong>ペンデリン卿（Lord Penderyn）</strong>：「残響の書庫（Archive of Echoes）」の主任学者。帝国政府の運営に資する遠き過去の知識を引き出すため、霊魂瓶に封じた古代の幽霊のコレクションを管理する勅許を得ている。しかし彼は独断でも霊に相談しており、霊界との交信を求める他のエリートや貴族たちのために反体制結社「残響の道（Path of Echoes）」を主宰している。（無謀、奇妙）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 5. COALRIDGE ================= -->
+      <section class="sheet-section" id="dist-coalridge">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 05</span>
+            <h1 class="sheet-title">コールリッジ<span class="sheet-title-en">COALRIDGE</span></h1>
+          </div>
+          <div class="sheet-meta">炭鉱・重工業区</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p45_coalridge.png" alt="コールリッジの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p44_coalridge_map.png" alt="コールリッジの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>コールリッジには、街の機械工、工場労働者、そして工場の大半が集まっている。狭苦しく、煤にむせび、騒々しく――濃い黒煙の雲、火花の雨、燃える燃え殻を吐き出し続けている。かつて石炭を運んだ古い高架鉄道線は、今ではガドック駅との間で重機や原材料を運搬しているが、古い線路や車両の多くは不法占拠者たちに明け渡され、仮設の住居へと改造されている。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>コールリッジ炭鉱（Coalridge Mine）</div>
+                  <p class="landmark-desc">この川デルタ地帯で最初の恒久入植地があった場所。元々は古代スコヴ王国によって築かれ、「ドスコヴォル（Doskovol）」――文字通り「スコヴの石炭」と呼ばれた。帝国がエレクトロプラズム電力を広く採用するにつれ石炭需要は激減したものの、1000年以上経った今もこの炭鉱は稼働し続けている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>旧操車場（The Old Rail Yard）</div>
+                  <p class="landmark-desc">ガドック駅が建設される前、この工業用操車場は市内の商業の中心だった。現在、旧操車場は1日に数本の重い貨物列車を扱うのみで、古い鉄道車両の多くは放置されたままその場で錆びついている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>製鉄工場群（The Ironworks）</div>
+                  <p class="landmark-desc">巨大な工業用労役場が広大に連なる区画。冷酷な職長たちが年季奉公の労働者を24時間体制で酷使し、リヴァイアサン・ハンター船の建造・改装や帝国全土へ送り出す物資の膨大な生産ノルマに応え続けている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>ブリックストン（Brickston）</div>
+                  <p class="landmark-desc">ダスクヴォールで最も過密な住宅地。ブリックストンは幾層にも積み上がった多層レンガ長屋がひしめく迷宮である。裏社会で最もタフな悪党たちの多くがここ出身であり、暗い迷路の中で生き残りとギャング稼業の過酷な教訓を叩き込まれて育つ。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip filled"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip filled"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="quote-box">
+              <strong>地区ルール：</strong>コールリッジの工場は24時間休まず稼働しているため、秘密裏に犯行を行う「理想的な時間帯」は存在しない。しかし職長たちは、賄賂を受け取って「休憩を取る」あるいは見て見ぬふりをすることには実に協力的である。
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">黒い痰を吐きながら工場から家路につく煤まみれの労働者。クレーンで荷下ろしされる重い鉄道貨物。野放しに駆け回るタフな浮浪児たち。規則違反の労働者を鞭打つ工場長。廃車両の石炭機関室で食事を作る不法占拠者。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">多層構造で木箱や廃材が溢れる。高架鉄道線。ダンヴィル通り、ブラックロック・ロード、ライト通り、クレーン通り、フォージ通り。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">煙を吐く煙突を備えた細長いレンガ長屋、金属板張りの工場や倉庫、住居に改造された鉄道車両。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>スレイン親方（Master Slane）</strong>：ごく些細な違反に対しても過剰で残酷な罰を与えることで悪名高い工場職長。これまで何度も暗殺が企てられたが、すべて失敗に終わっている。彼は悪魔だという噂もある。（冷淡、残酷、サディスティック）</li>
+                <li><strong>ベル・ブローガン（Belle Brogan）</strong>：有望な労働組合の組織者として人気を集めているスコヴランド人の工場労働者。工場長が彼女を見せしめにしようとするのも時間の問題だ。（魅力的、自信家、大胆）</li>
+                <li><strong>ホッパー（Hopper）</strong>：地区の屋上に腰掛ける麻薬中毒者・ウィスパー・変人。コールリッジの地下深くから地平線の彼方へと伸びる「幽霊線路」と「霊魂列車」が見えると主張している。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 6. CROW'S FOOT ================= -->
+      <section class="sheet-section" id="dist-crowsfoot">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 06</span>
+            <h1 class="sheet-title">クロウズ・フット<span class="sheet-title-en">CROW'S FOOT</span></h1>
+          </div>
+          <div class="sheet-meta">ギャング抗争の交差点</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p47_crow_s_foot.png" alt="クロウズ・フットの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p46_crow_s_foot_map.png" alt="クロウズ・フットの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>クロウズ・フットは隣接する諸地区の性質を併せ持つ交差点である――シルクショアの違法な悪徳、ザ・ドックスの労働と交易、チャーホロウの貧困、そしてチャーターホールの古典建築。この地区は、終わりのない縄張り争いの中であらゆる大通りや街角を自らの領分と主張する、競合ストリート・ギャングとブルーコート分隊の雑多な見世物小屋によって繋ぎ止められ、同時に引き裂かれそうになっているパッチワークなのだ。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>カラスの巣（Crow's Nest）</div>
+                  <p class="landmark-desc">大災厄以前から建つ古代の塔。かつては儀式の聖域、天文学者の実験室、ブルーコートの監視所として使われてきたが、現在は地区最大のギャング「カラス団（The Crows）」の本拠地となっている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>タングルタウン（Tangletown）</div>
+                  <p class="landmark-desc">数百年前に巨大なリヴァイアサン・ハンター船の1隻が川で半ば沈没した。以来、無数の小舟が船体に結びつけられ、ひとつの水上居住区へと発展した。タングルタウンはクロウズ・フットのストリート・ギャングたちの間で中立地帯とされており、ここでの暴力は一切禁じられている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>ストラスミル・ハウス（Strathmill House）</div>
+                  <p class="landmark-desc">クロウズ・フットの迷子や望まれざる孤児たちは、例外なくストラスミル・ハウスの廊下を通り抜ける。波止場やコールリッジの労役場で働くための世話をされ訓練を受ける者もいれば、地区のギャングが使う見張り役や使い走りの技を密かに仕込まれる者もいる――もちろんストラスミル・ハウスへの少額の手数料と引き換えに。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>紅帯剣術学院（Red Sash Sword Academy）</div>
+                  <p class="landmark-desc">イルヴィア剣術「流星流（Falling Star style）」の道場へと改装された大邸宅。地区内で複数の高級麻薬窟を経営するイルヴィア系ギャング「レッド・サッシュ（The Red Sashes）」が、違法事業の本部兼表向きの隠れ蓑として所有している。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip filled"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="quote-box">
+              <strong>地区ルール：</strong>長年の殺し合いにより、ここは市内でもっとも幽霊に憑かれた地区となった。怒れる幽霊たちはここでの流血を渇望している。暴力的な行動で <strong>+1d</strong> を得る悪魔の取引（Devil's Bargain）を選べるが、同時に幽霊も暴れ出す。
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">仕事場を行き来する港湾労働者の列。街角で客を引く娼婦たち。店主に賄賂をせびるブルーコートの分隊。屋根の上から互いに挑発の声を飛ばし合う敵対ギャング。禁制品を求めてやって来た貴族の高級馬車。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">多層構造、狭苦しく、暗く、霧深い。アッシュ通り、シンダー通り、ライ通り、キャンドル通り、ハリヴァー小路。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">安宿、宿屋、アパートに間仕切りされた古い邸宅、伝統的な石造の家。鍛冶屋、酒場、娼館、精肉店。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>ロックラン巡査部長（Sergeant Lochlan）</strong>：ダンヴィル警部に報告する、この地区の上級ブルーコート分隊長。柔軟で話がわかり、取れるときには賄賂や付け届けを受け取るが、必要なときには法を執行して見せしめを作る。（抜け目ない、タフ、威厳がある）</li>
+                <li><strong>リュイット、ジョル、マイラ、レイフ（Lewit, Jol, Myra, Reyf）</strong>：恐喝稼業を営むブルーコートの巡査たち。</li>
+                <li><strong>マーディン・ガル（Mardin Gull）</strong>：パブ「水漏れバケツ亭（The Leaky Bucket）」の店主。マーディンは長年（ロリックやリッサよりも前に）カラス団の頭目を務めていたが、今は悪党稼業から足を洗い快適な隠居生活を送っている。（魅力的、経験豊富、尊敬されている）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 7. THE DOCKS ================= -->
+      <section class="sheet-section" id="dist-thedocks">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 07</span>
+            <h1 class="sheet-title">ザ・ドックス<span class="sheet-title-en">THE DOCKS</span></h1>
+          </div>
+          <div class="sheet-meta">古き港湾・海運拠点</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p49_the_docks.png" alt="ザ・ドックスの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p48_the_docks_map.png" alt="ザ・ドックスの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>ダスクヴォールの波止場は古く、その歴史は大災厄以前の時代にまで遡る。当時ここは、過酷な北海を渡らずにスコヴ王国と交易できる小さな入植地に過ぎなかった。今日では商業の一部が帝国の新たな電鉄網へと移ったものの、波止場は今なお貨物船、漁船、そしてこの街を動かし続ける原材料（リヴァイアサンの血）をもたらす格式高いリヴァイアサン・ハンター船で賑わっている。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>ノース・フック商会（The North Hook Company）</div>
+                  <p class="landmark-desc">この壮麗で古風な邸宅は、帝国に現存する最古の海運・海洋探検企業の本社である。ノース・フック商会は巨大な商船隊を擁しており、公式には電鉄交易のみを管轄する運輸省（Ministry of Transport）の民間フロント企業に過ぎないのではないかと多くの者に囁かれている。同社の敵やライバル（そして詮索好きな記者）は姿を消す傾向にあるため、真相は誰にもわからない。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>インク小路（Ink Lane）</div>
+                  <p class="landmark-desc">曲がりくねった裏通りには、街の多くの刺青師と数社の新聞社が軒を連ねており、皆でインクを大量共同購入して費用を折半している。あらゆる噂話やゴシップが集まる絶好の場所だ。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>ソルトフォーズ（Saltford's）</div>
+                  <p class="landmark-desc">ダスクヴォールで最も悪名高い民間銀行の1つが入る、ずんぐりとした石造りの建物。波止場に近いことから、強盗に転身しようと思い立った酔っ払い船乗りのギャングに幾度となく襲われたが、そのすべてを撃退してきた――時には次の愚か者への見せしめとして、街灯に死体を吊るすことすらある。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>見世物動物苑（The Menagerie）</div>
+                  <p class="landmark-desc">錆びついた動物小屋、水槽、けばけばしい看板が点在する、柵に囲まれた泥だらけの空き地。船乗りたちが航海中に拾ってきた奇妙な生き物を伝統的に預けていく場所であり、風変わりな経営者であるライ船長（Captain Rye）が即席の動物園展示に組み込んでいる。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">岸壁に停泊する中小型蒸気船と、沖合でそれらを矮小に見せる巨艦リヴァイアサン・ハンター船。労働歌を歌いながら働く船乗りと港湾労働者の群れ。荷馬車で運び出される重い貨物。酒場から飛び出してくる乱闘の怒号とガラスの割れる音。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">波止場そのものの上に張り出した高架街路。クレーンとウインチが据え付けられている。ノース・フック通り、カーター通り、プルーム通り、ソルトフォード通り、インク小路。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">巨大な貨物倉庫。ずんぐりした酒場、娼館、刺青屋。船乗り向けの過密な簡易宿泊所。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>ヘルカー親方（Chief Helker）</strong>：最も影響力のある上級港湾労働者の1人。ヘルカーは波止場で絶大な発言力を持っており、彼に逆らえば積み荷を海に放り込まれる――下手すればお前自身も一緒にな。（慎重、強欲）</li>
+                <li><strong>トリス（Tris）</strong>：リヴァイアサンを直視して生きて帰った者にしか彫らない伝説的な刺青師。トリスから刺青を彫ってもらうことは、虚無の海の悪魔を狩るすべての者にとって通過儀礼である。（芸術的、人気者、洞察力がある）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 8. DUNSLOUGH ================= -->
+      <section class="sheet-section" id="dist-dunslough">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 08</span>
+            <h1 class="sheet-title">ダンスラウ<span class="sheet-title-en">DUNSLOUGH</span></h1>
+          </div>
+          <div class="sheet-meta">極貧スラム・監獄区</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p51_dunslough.png" alt="ダンスラウの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p50_dunslough_map.png" alt="ダンスラウの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>ダンスラウは街の極貧層が集まるゲットーであり、同時にアイアンフック監獄（Ironhook Prison）とその労働キャンプがある場所でもある。元来このゲットーは囚人の家族が暮らす区画だったが、長年にわたる極度の貧困と行政の放置によって、泥にまみれた廃墟へと変わり果てた。ここでは悪循環が繰り返されている――絶望による犯罪、逮捕、投獄、そして再びダンスラウへの釈放。こうしてアイアンフックは搾取すべき労働力を無限に供給され続けているのだ。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>アイアンフック監獄（Ironhook Prison）</div>
+                  <p class="landmark-desc">最も凶悪な（あるいは最も運の悪い）犯罪者が収監される、そびえ立つ金属の要塞。最も貧しい者はダンヴィル労働キャンプでの強制労働を強いられる。一方、最もコネの強い囚人は快適な監獄暮らしを送り、鉄格子の向こうから犯罪組織の運営を続けることすらある。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>ダンヴィル労働キャンプ（Dunvil Labor Camp）</div>
+                  <p class="landmark-desc">アイアンフックの職員に賄賂を払えない貧しい囚人たちは、一日の大半をダンヴィル労働キャンプで苦役に従事し、鉄道駅行きの艀に貴重な鉱石を積み込んだり、「泥沼（The Mire）」から運び出された大岩を砕いたりして過ごす。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>ダンスラウ・ゲットー（Dunslough Ghetto）</div>
+                  <p class="landmark-desc">街で最も困窮した人々が流れ着く場所であり、その日のパンを買うためだけのはした金で「泥沼」の作業に従事している。市はこの区画を監獄敷地の「排水溝（おこぼれ）」と見なしており、維持管理を一切行っていない。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>泥沼（The Mire）</div>
+                  <p class="landmark-desc">巨大な泥の採掘場。「泥沼」は古代に何らかの天体が落下した跡であり、地中に多種多様な貴重な鉱石や宝石が埋め込まれて残っている。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">「泥沼」から泥まみれで帰ってくる労働者。バロウクレフト農場へ続く道端で残飯を漁る困窮家族。監督官が労働キャンプの囚人に鞭を打つのを、ライフルを背負って退屈そうに眺めるアイアンフックの看守たち。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">狭苦しく多層構造――一部は石畳だが多くは分厚い黒い泥と化した土道。通りの名前は一切存在しない。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">老朽化した木造長屋（多くは火事の跡や経年劣化で倒壊）。石造りのサイロ、ガシャンと鳴る蒸気機械、浚渫機材用のトタン小屋。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>クロケット親方（Master Krocket）</strong>：アイアンフックが脱獄者の追跡や密輸品・地下トンネルの探知に使う、獰猛で唸り声を上げる猟犬の群れを管理する不快で脂ぎった髪のかかしのような男。彼の犬使いたちは労働キャンプ周辺やダンスラウ全域をうろつき、監獄とのコネを利用して便宜や賄賂を得ている。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 9. NIGHTMARKET ================= -->
+      <section class="sheet-section" id="dist-nightmarket">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 09</span>
+            <h1 class="sheet-title">ナイトマーケット<span class="sheet-title-en">NIGHTMARKET</span></h1>
+          </div>
+          <div class="sheet-meta">商業・新興富裕層・闇市</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p53_nightmarket.png" alt="ナイトマーケットの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p52_nightmarket_map.png" alt="ナイトマーケットの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>ナイトマーケットは商業が支配する地区である。ガドック鉄道駅の近くにあり、帝国各地を走る貨物列車からダスクヴォールへ運ばれてくる異国情緒あふれる希少な商品の大部分を受け入れている。ナイトマーケットを故郷と呼ぶ市民たちは新たな「エリート」階級を形成している――貴族の血筋ではないものの、爵位なしに土地・地位・権力を主張する富裕層だ。地区では新築工事が進み、買えるだけの財力があるエリート向けに最新の設備をすべて備えた豪華な個人用タウンハウスが立ち並んでいる。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>ザ・ヴェイル（The Veil）</div>
+                  <p class="landmark-desc">守秘義務の徹底と、秘術的あるいは風変わりな出自を持つ客に対する寛容な方針で知られる高級社交クラブ。経営者兼ホストのロラン・ヴォラリス（Rolan Volaris）は、悪魔の血が極めて特異な形で現れたティケロス人であり、腰から下が蛇の体になっている……と人は噂する。ヴォラリスが直接人前に姿を見せることは滅多にない。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>ダンドリッジ＆サンズ（Dundridge &amp; Sons）</div>
+                  <p class="landmark-desc">ダスクヴォール随一の仕立屋と多くの者に目されている老舗。ダンドリッジ家は300年以上にわたり、目の肥えた市民たちに最高級の衣服と装身具を提供してきた。伝説的な評判にもかかわらず、ダンドリッジの価格は非常に良心的である。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>ヴリーンの猟犬レース場（Vreen's Hound Races）</div>
+                  <p class="landmark-desc">特別に交配された猟犬のレースは現在ダスクヴォールの上流階級で大流行している。「マスター・ヴリーン」を名乗るダガー諸島出身の詐欺師が、「帝国随一の猟犬レース場」を造るとして騙されやすい投資家たちから少なからぬ大金を巻き上げた。投資家たちはまだ一銭の配当も得ていないが、ヴリーンは「まもなく莫大な利益が転がり込む」と請け合っている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>悪魔の歯亭（The Devil's Tooth）</div>
+                  <p class="landmark-desc">錬金術調合薬の「裏メニュー」で知られる酒場。冒険心旺盛な精神探求者（サイコノート）たちは、女将ケンバーの居心地の良い店の比較的安全な環境で、あらゆる精神変容（あるいは霊魂変容）薬物を試すことができる。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="quote-box">
+              <strong>地区ルール：</strong>ナイトマーケットは市内でもっとも違法品や秘術品の取引に適した場所だが、暗がりには奇妙な恐怖が満ちている。ここで「資産の獲得」を行う際、<strong>2ストレス</strong>を支払うことで <strong>+1d</strong> を得られる。
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">極彩色の電灯が商人の露店を宣伝して輝く。地区の守護神として信仰される忘れられた神「夜の女王（Night Queen）」の像の前で、数人の敬虔な信徒が無言で祈りを捧げる。仮面の後ろに顔を隠した街のエリートたちが、秘密クラブで奇妙な快楽に耽るため地下へと滑り込んでいく。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">多層構造の木製プラットフォームと板張り歩道。デスランズの珪化木を配した造園公園。高級な地下街路。ソング通り、ストリング通り、ペーパー通り、ベル通り。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">屋外の木製市場屋台。地下の石造りの店舗とクラブ。ナイトマーケットのエリート向けの新築個人用タウンハウス。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>ジラ（Jira）</strong>：ダガー諸島産の上質な武器商人。ダスクの多くのストリート・タフから深く尊敬されており、「ジラの刃（Jira blade）」は誰もが憧れるステータスシンボルである。（大胆、タフ）</li>
+                <li><strong>レクルール（Leclure）</strong>：個人向けの贅沢品（石鹸、髪油、香水、上質な絹）を商い、占いにも手を染める女性。溺死した彼女の恋人が幽霊となって耳元で秘密を囁いているという噂がある。（抜け目ない、タフ、威厳がある）</li>
+                <li><strong>モーディス（Mordis）</strong>：幾重にも重ねたローブとフードの下に真の姿を隠している奇妙な商人。問い詰めもせずオカルトや秘術の盗品を買い取る故買屋でもある。（秘密主義、洞察力がある、秘術的）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 10. SILKSHORE ================= -->
+      <section class="sheet-section" id="dist-silkshore">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 10</span>
+            <h1 class="sheet-title">シルクショア<span class="sheet-title-en">SILKSHORE</span></h1>
+          </div>
+          <div class="sheet-meta">運河と赤ランプの歓楽街</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p55_silkshore.png" alt="シルクショアの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p54_silkshore_map.png" alt="シルクショアの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>幾十もの狭い運河が縦横に走るシルクショアは、この「赤ランプ街（歓楽街）」を訪れるほとんどの客がそうするように、ゴンドラで巡るのが最適な地区である。娼館、悪徳の巣窟、屋台、異国風の商店がすべて水辺に張り出すように建ち並び、何も尋ねることなく客の欲望を満たす準備を整えている。シルクショアは公然の放縦と密かな背徳の地であり、想像し得るあらゆる快楽――そして空想の限界を押し広げるような快楽までも――を提供している。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>スパーク・グラウンズ（The Spark Grounds）</div>
+                  <p class="landmark-desc">雷撃塔のパチパチと弾ける閃光の下、この開けた広場には命知らずの曲芸師やサーカス芸人たちのスタントを見ようと群衆が集まる。その中には、電弧を引き寄せて花火のような光景を演出するため金属片を飾り付けた有人凧で空を舞う、悪名高い「スパーク・フライヤー」たちも含まれる。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>ザ・イーズ（The Ease）</div>
+                  <p class="landmark-desc">地区北部は馬車よりもゴンドラの方が移動しやすく、運河へ通じる数十の入り口の両脇には、色付きの電灯や翻る旗で商売を宣伝する商店や娼館が立ち並んでいる。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>フォグクレスト（Fogcrest）</div>
+                  <p class="landmark-desc">「通り」を構成する狭い階段の迷路の中に長屋がぎっしり詰め込まれた、険しく尖った丘の頂。芸術家、自由思想家、幻覚探求者、哲学者たちが集うボヘミアンなコミュニティである。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>アンカヤット公園（Ankhayat Park）</div>
+                  <p class="landmark-desc">豪奢に造園されたこの空間は市内最大の広場であり、年間を通じて多くの公的祝祭や催しが開かれる。公園の名を冠されたイルヴィア人貴族は、この公園に鷹の飼育場と上質な馬の厩舎を構えており、時に貴族たちのために鷹狩りを催す。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="quote-box">
+              <strong>地区ルール：</strong>シルクショアにいる間に悪癖に<strong>耽溺（Overindulge）</strong>してしまったなら、その味が忘れられなくなる。次にこの地区で「悪癖に耽る」ロールを行う際、<strong>+1d</strong> を得る。
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">蜘蛛の巣のような運河を往来し、歓楽の館や悪徳の巣窟へと待ちきれない客を運ぶ数百艘のゴンドラ。フォグクレストの丘のカフェでイルヴィア茶を啜りながら認識論を戦わせる芸術家と哲学者。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">わずかに残る地上の通りも、曲がり角ごとに小さな運河に架かる橋で途切れる。屋根から屋根へと渡された色灯と柄物の絹布が、通な客に向けた複雑な暗号で様々な快楽を知らせている。グリーンウォーター、ハイウォーター、チャイムウォーター、リングウォーター、スイートウォーター。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">木と石で造られた背の高い細長い長屋。運河沿いの低い掘っ立て小屋と屋台。フォグクレストの丘の上の窮屈な古い石造りの家と改装事務所。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>レヴィラ（Levyra）</strong>：霊魂瓶に入った幽霊を持ち込むよう客に勧め、その霊を自らに憑依させて最後の言葉を交わさせた後、幽霊を「解放」する霊媒師（実際にはすぐ近くに待機しているスピリット・ワーデンに引き渡す）。</li>
+                <li><strong>ヘレン（Helene）</strong>：カジノ「銀牡鹿亭（Silver Stag Casino）」の優雅で謎めいた女主人。帝国以前のカエデの時代に生きていればセヴェロスの女王になっていたはずだ、と人々は語る。</li>
+                <li><strong>マダム・テスリン（Madame Tesslyn）</strong>：市内最古にして最も格式ある娼館「赤ランプ（The Red Lamp）」を経営している。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 11. SIX TOWERS ================= -->
+      <section class="sheet-section" id="dist-sixtowers">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 11</span>
+            <h1 class="sheet-title">シックス・タワーズ<span class="sheet-title-en">SIX TOWERS</span></h1>
+          </div>
+          <div class="sheet-meta">没落貴族の廃墟・霊域</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p57_six_towers.png" alt="シックス・タワーズの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p56_six_towers_map.png" alt="シックス・タワーズの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>かつて格式を誇ったこの地区は、何世紀もの時を経て往時の淡い面影へと色褪せてしまった。地区名の由来となった「6つの塔」は、もともとダスクヴォール最初の貴族家門たちの壮麗な邸宅だった。しかし2つ（ボウモア邸とローワン邸）を除くすべてが売り払われて安アパートへと改装されるか、廃墟となって打ち捨てられてしまった。この地区には空虚で幽霊じみた空気が漂っており、広大な古い建物の多くは電気が通らず暗く沈み、広い石畳の通りはひび割れて歪み、雑草の生い茂る空き地では不法占拠者たちの焚き火がパチパチと音を立てている。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>ローワン邸（Rowan House）</div>
+                  <p class="landmark-desc">元祖6つの塔のうち現存する1つ。この古風な建物は、堀、跳ね橋、矢狭間まで備えた歴史書に出てくる古城さながらの姿をしている。強大なローワン一族はこの要塞の内側から領地を統治しており、厚い石壁の守りの外へ出ることは滅多にない。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>ミストショア公園（Mistshore Park）</div>
+                  <p class="landmark-desc">ダスク川の東支流とその向こうのデスランズを見渡す、暗く草木の生い茂った空間。古い民謡では、結ばれることのない若い恋人たちがこの公園で身を投げたと歌われている。真偽はどうあれ、今この公園に霊が憑いていることだけは確かだ。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>スカーロック邸（Scurlock Manor）</div>
+                  <p class="landmark-desc">スカーロック家は何世紀も前にダスクヴォールへやって来て、かつては街で絶大な勢力を誇ったが、何らかの呪いか災厄が一族を襲った。この崩れかけた邸宅と絡み合う蔓草が、彼らの栄華の残りすべてである。今も若い甥か従兄弟がそこに住んでいると言われているが、スカーロック卿自身はもっと上等な住まいへと移っている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>泣く淑女の腕（Arms of the Weeping Lady）</div>
+                  <p class="landmark-desc">かつてオペラハウスだったこの壮麗な建物は、現在「泣く淑女」の慈善団体が運営する極貧層向けの炊き出し所兼簡易宿泊所となっている。地元の人々は、この建物をチャーターホールとシックス・タワーズの境界線の目印にしている。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip filled"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="quote-box">
+              <strong>地区ルール：</strong>空き家や放棄された不動産が数多く存在するため、この地区は<strong>悪党たちの秘密の隠れ家（Lair）</strong>を構えるのに理想的な場所である。
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">冷たい風に吹かれたゴミ屑が、まだ点いている数本の街灯と不法占拠者の焚き火に照らされて無人の通りをカサカサと転がる。廃屋の鎧戸や扉が幽霊の合唱のように軋み、唸り、バタンと鳴る。住民たちは霊除けの護符を胸にしっかりと握りしめ、俯いて足早に通り過ぎていく。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">ひび割れ壊れた広い石畳の大通り。電気もなく暗く、草が生い茂り放置されている。コンバー通り、ボウモア通り、ローワン通り、コールバーン大通り。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">荒廃して崩れかけた宮殿のような邸宅。狭く安いアパートへと改装された大邸宅。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>マザー・ナリア（Mother Narya）</strong>：慈善施設「泣く淑女の腕」を取り仕切っている。（親切、忍耐強い）</li>
+                <li><strong>シェフ・ロゼル（Chef Roselle）</strong>：市内屈指の料理人の1人。幽霊の出るシックス・タワーズの通りまで足を運ぶ価値のある伝説のレストラン「黄金のプラム（Golden Plum）」を今も営んでいる。（創造的、洞察力がある、友好的）</li>
+                <li><strong>フリント（Flint）</strong>：使用禁止になった廃邸宅を拠点に霊魂を売買する霊魂密売人。（奇妙、計算高い、疑り深い）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 12. WHITECROWN ================= -->
+      <section class="sheet-section" id="dist-whitecrown">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">地区 12</span>
+            <h1 class="sheet-title">ホワイトクラウン<span class="sheet-title-en">WHITECROWN</span></h1>
+          </div>
+          <div class="sheet-meta">総督府・最高貴族・学院の島</div>
+        </header>
+
+        <div class="media-grid">
+          <figure class="media-frame">
+            <img src="./districts/p59_whitecrown.png" alt="ホワイトクラウンの街並みイラスト" loading="lazy">
+            <figcaption class="media-caption"><span>街並みイラスト</span><span>CITYSCAPE</span></figcaption>
+          </figure>
+          <figure class="media-frame">
+            <img src="./maps/p58_whitecrown_map.png" alt="ホワイトクラウンの地区マップ" loading="lazy">
+            <figcaption class="media-caption"><span>地区マップ（番号1〜4は主要地点に対応）</span><span>DISTRICT MAP</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="two-col-grid">
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">地区の概要（OVERVIEW）</h2></div>
+              <p>ホワイトクラウンは、本土からノース・フック海峡を挟んだ向かいの島にある壮大な頂の上に鎮座している。この高みから総督の要塞が街全体を見下ろし、その両脇を最も強大な貴族たちの広大な邸宅群と、豪奢に整えられたダスクヴォール学院のキャンパスが固めている。ホワイトクラウンはそれ自体が1つの豊かで隔絶された世界であり、市民のほとんどは、そこにそびえる富と権力の輝く尖塔へと続く橋を生涯一度も渡ることなく一生を終える。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">主要地点（LANDMARKS）</h2></div>
+              <ul class="landmark-list">
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">1</span>総督要塞（Lord Governor's Stronghold）</div>
+                  <p class="landmark-desc">皇帝はもともと、スコヴランド侵攻に先立ちノース・フックに駐留する帝国軍の守備隊拠点としてこの要塞を建造させた。現在は総督とその家族、そして政府の補佐官たちが暮らしている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">2</span>ダスクヴォール学院（Doskvol Academy）</div>
+                  <p class="landmark-desc">帝国有数の学府と称えられるこの学校は、リヴァイアサン・ハンター船の船長および上級士官の養成機関として最もよく知られている。狩りで命を落とした哀れな者たちの穴を埋めるため、新兵のための訓練航海が一年中行われている。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">3</span>筆頭監視官の館（Master Warden's Estate）</div>
+                  <p class="landmark-desc">この巨大な要塞化された邸宅は、スピリット・ワーデン（霊魂監視官）司令官の居館であり、彼らの主要な訓練施設でもある。一部の霊魂はベルウェザー火葬場で破壊されず――未知の目的のためにここへ運ばれているという噂がある。</p>
+                </li>
+                <li class="landmark-item">
+                  <div class="landmark-title"><span class="pin-num">4</span>ノース・フック灯台（North Hook Lighthouse）</div>
+                  <p class="landmark-desc">この古代の建造物は、ダスクヴォールを取り囲む虚無の海の暗闇の奥深くまで、何百マイルも先を照らす航行灯標として機能するエレクトロプラズム装置へと改造されている。</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-stack">
+            <div class="ratings-box">
+              <div class="rating-row"><span>富（Wealth）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i></span></div>
+              <div class="rating-row"><span>治安・安全（Security &amp; Safety）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i><i class="pip filled"></i></span></div>
+              <div class="rating-row"><span>犯罪の影響力（Criminal Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span></div>
+              <div class="rating-row"><span>神秘の影響力（Occult Influence）</span><span class="pips"><i class="pip filled"></i><i class="pip filled"></i><i class="pip"></i><i class="pip"></i></span></div>
+            </div>
+
+            <div class="quote-box">
+              <strong>地区ルール：</strong>極めて厳重なブルーコートの巡回により、ほとんどのエンゲージメント・ロールは <strong>-2d</strong> のペナルティを受ける。ホワイトクラウンで貴族を標的にした作戦は、悪名（Heat）発生において<strong>「敵対勢力の縄張り（Hostile turf）」</strong>とみなされる。
+            </div>
+
+            <div class="kv-box">
+              <div class="kv-row"><div class="kv-key">風景</div><div class="kv-val">装甲馬に跨り、輝く槍を高々と掲げて要塞の外を行進する帝国兵士たち。改装のため入渠中のリヴァイアサン・ハンター船で訓練を行う訓練生たち。途方もない富豪たちの豪奢な馬車やエレクトロプラズム馬車が、特権階級の乗客を豪華な目的地へと乗せて滑るように走り去っていく。</div></div>
+              <div class="kv-row"><div class="kv-key">街路</div><div class="kv-val">広く磨かれた石畳、温かな色の電灯が溢れ昼間同然の明るさ。ホワイトクラウン大通り、スワンクレスト大通り。</div></div>
+              <div class="kv-row"><div class="kv-key">建物</div><div class="kv-val">壮大で優雅なファサード、造園されたテラス、バルコニー、白金と黄金の象嵌細工を施した明るい大理石建築同士を結ぶ高架歩道。</div></div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row"><h2 class="prose-heading">著名人（NOTABLES）</h2></div>
+              <ul class="notables-list">
+                <li><strong>マエストロ・ヘレレン（Maestro Helleren）</strong>：街のエリートたちの最高峰の公演会場である「尖塔庭園劇場（Spiregarden Theater）」の上級作曲家兼指揮者。（誠実、劇的）</li>
+                <li><strong>レディ・フレイラ（Lady Freyla）</strong>：帝国随一のソムリエと評される女性。高級店「皇帝の樽（Emperor's Cask）」で、それにふさわしいごく限られた客にのみ給仕する。（博識、教養がある、魅力的）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="doc-footer">
+        <span>出典：blades_sheets_v8_2.pdf（p.36–59 準拠）</span>
+        <span>ダスクヴォール 12地区ガイド 日本語版</span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const desktopBtn = document.getElementById('desktopThemeBtn');
+      const mobileBtn = document.getElementById('mobileThemeBtn');
+      const themeLabel = document.getElementById('themeLabel');
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      const menuBtn = document.getElementById('menuToggleBtn');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        themeLabel.textContent = theme === 'dark' ? 'DARK' : 'LIGHT';
+        try {
+          localStorage.setItem('bitd_playsheet_theme', theme);
+        } catch (e) {}
+      }
+
+      const savedTheme = (function () {
+        try {
+          return localStorage.getItem('bitd_playsheet_theme');
+        } catch (e) {
+          return null;
+        }
+      })();
+
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        applyTheme(savedTheme);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        applyTheme('dark');
+      } else {
+        applyTheme('light');
+      }
+
+      function toggleTheme() {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      }
+
+      desktopBtn.addEventListener('click', toggleTheme);
+      mobileBtn.addEventListener('click', toggleTheme);
+
+      function openSidebar() {
+        sidebar.classList.add('open');
+        backdrop.classList.add('open');
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        backdrop.classList.remove('open');
+      }
+
+      menuBtn.addEventListener('click', function () {
+        if (sidebar.classList.contains('open')) {
+          closeSidebar();
+        } else {
+          openSidebar();
+        }
+      });
+
+      backdrop.addEventListener('click', closeSidebar);
+
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.forEach(function (l) { l.classList.remove('active'); });
+          link.classList.add('active');
+          if (window.innerWidth <= 820) {
+            closeSidebar();
+          }
+        });
+      });
+
+      const targets = Array.from(document.querySelectorAll('#overview, [id^="dist-"]'));
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('id');
+              const matching = document.querySelector('.nav-link[href="#' + id + '"]');
+              if (matching) {
+                navLinks.forEach(function (l) { l.classList.remove('active'); });
+                matching.classList.add('active');
+              }
+            }
+          });
+        }, { rootMargin: '-15% 0px -70% 0px' });
+
+        targets.forEach(function (t) { observer.observe(t); });
+      }
+    })();
+  </script>
+</body>
+</html>
