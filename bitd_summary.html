@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blades in the Dark コア・プレイシート v3 日本語版</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #EBEBEB;
+      --surface: #F7F7F7;
+      --surface-alt: #DFDFDF;
+      --text: #1F1F1F;
+      --text-muted: #525252;
+      --header-bg: #262626;
+      --header-text: #F2F2F2;
+      --accent: #8B1A1A;
+      --accent-hover: #6B1212;
+      --accent-text: #8B1A1A;
+      --accent-fg: #F7F7F7;
+      --border: #C4C4C4;
+      --border-strong: #262626;
+      --dialogue-player-bg: #E2E2E2;
+      --dialogue-player-text: #1F1F1F;
+      --dialogue-gm-bg: #363636;
+      --dialogue-gm-text: #F2F2F2;
+      --sidebar-width: 268px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #181818;
+      --surface: #222222;
+      --surface-alt: #2C2C2C;
+      --text: #E6E6E6;
+      --text-muted: #B0B0B0;
+      --header-bg: #111111;
+      --header-text: #EBEBEB;
+      --accent: #8B1A1A;
+      --accent-hover: #A32424;
+      --accent-text: #D97373;
+      --accent-fg: #F2F2F2;
+      --border: #3B3B3B;
+      --border-strong: #666666;
+      --dialogue-player-bg: #2E2E2E;
+      --dialogue-player-text: #E6E6E6;
+      --dialogue-gm-bg: #3A3A3A;
+      --dialogue-gm-text: #F2F2F2;
+    }
+
+    * {
+      box-sizing: border-box;
+      border-radius: 0 !important;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-weight: 400;
+      line-height: 1.75;
+      background-color: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Layout */
+    .app-shell {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background-color: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-brand {
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      padding: 24px 20px 20px;
+      border-bottom: 4px solid var(--accent);
+    }
+
+    .sidebar-brand-sub {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      color: #B8B8B8;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-brand-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      line-height: 1.3;
+      letter-spacing: 0.02em;
+    }
+
+    .sidebar-brand-ver {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 2px 8px;
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .sidebar-controls {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .theme-btn {
+      width: 100%;
+      padding: 8px 12px;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      background-color: var(--surface-alt);
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .theme-btn:hover {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      border-color: var(--accent);
+    }
+
+    .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 16px 0 32px;
+      flex: 1;
+    }
+
+    .nav-group-label {
+      padding: 12px 20px 6px;
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: var(--accent-text);
+      text-transform: uppercase;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 7px 20px;
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      transition: background-color 0.12s ease, border-color 0.12s ease;
+    }
+
+    .nav-link:hover {
+      background-color: var(--surface-alt);
+      border-left-color: var(--accent);
+    }
+
+    .nav-link.active {
+      background-color: var(--surface-alt);
+      border-left-color: var(--accent);
+      font-weight: 700;
+      color: var(--accent-text);
+    }
+
+    .nav-sublink {
+      padding-left: 32px;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    /* Mobile Header */
+    .mobile-header {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      border-bottom: 3px solid var(--accent);
+      padding: 12px 16px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .mobile-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+    }
+
+    .mobile-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      padding: 6px 12px;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      border: 1px solid var(--accent);
+      cursor: pointer;
+    }
+
+    .menu-btn {
+      background-color: transparent;
+      color: var(--header-text);
+      border: 1px solid #666666;
+    }
+
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.55);
+      z-index: 95;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      min-width: 0;
+      padding: 36px 40px 72px;
+      max-width: 1220px;
+    }
+
+    [id] {
+      scroll-margin-top: 24px;
+    }
+
+    /* Sheet Section (Each PDF Page) */
+    .sheet-section {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      margin-bottom: 48px;
+      padding: 32px;
+    }
+
+    .sheet-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 16px;
+      margin-bottom: 28px;
+      border-bottom: 3px solid var(--border-strong);
+    }
+
+    .sheet-title-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+    }
+
+    .sheet-page-tag {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      padding: 4px 10px;
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .sheet-title {
+      margin: 0;
+      font-size: 1.65rem;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      line-height: 1.25;
+    }
+
+    .sheet-title-en {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-left: 8px;
+    }
+
+    .sheet-meta {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* Two-column Playsheet Grid */
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .col-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .sub-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Move Cards */
+    .move-card {
+      background-color: var(--surface-alt);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .move-card-header {
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      padding: 8px 14px;
+      font-size: 0.92rem;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      border-left: 4px solid var(--accent);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 4px 8px;
+    }
+
+    .move-card-en {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #B8B8B8;
+      letter-spacing: 0.04em;
+    }
+
+    .move-card-body {
+      padding: 12px 14px;
+      font-size: 0.92rem;
+      font-weight: 400;
+    }
+
+    .move-card-body p {
+      margin: 0;
+    }
+
+    /* Prose Blocks */
+    .prose-block {
+      margin-bottom: 22px;
+    }
+
+    .prose-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .prose-heading-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px 12px;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+    }
+
+    .prose-heading {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+
+    .ref-badge {
+      background-color: var(--surface-alt);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .prose-block p {
+      margin: 0 0 10px;
+      font-size: 0.93rem;
+    }
+
+    .quote-box {
+      margin: 12px 0;
+      padding: 12px 16px;
+      background-color: var(--surface-alt);
+      border-left: 4px solid var(--accent);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Diamond Bullet List */
+    .diamond-list {
+      list-style: none;
+      margin: 8px 0 12px;
+      padding: 0;
+    }
+
+    .diamond-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 10px;
+      font-size: 0.92rem;
+    }
+
+    .diamond-list li::before {
+      content: "◆";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent-text);
+      font-size: 0.75rem;
+      line-height: 1.85;
+    }
+
+    /* Key Terms & Emphasis */
+    strong, .key-term {
+      font-weight: 700;
+    }
+
+    .term-accent {
+      font-weight: 700;
+      color: var(--accent-text);
+    }
+
+    /* Motto Footer Bar */
+    .motto-bar {
+      margin-top: 24px;
+      padding: 12px 16px;
+      background-color: var(--surface-alt);
+      border-top: 2px solid var(--border-strong);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .motto-label {
+      display: inline-block;
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      padding: 1px 7px;
+      margin-right: 8px;
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    /* Conversation Flow Diagram (Page 2) */
+    .flow-diagram {
+      margin: 14px 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .flow-row {
+      display: grid;
+      grid-template-columns: 1fr 140px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .flow-row.gm-side {
+      grid-template-columns: 140px 1fr;
+    }
+
+    .flow-bubble {
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      border: 1px solid var(--border);
+    }
+
+    .flow-bubble.player {
+      background-color: var(--dialogue-player-bg);
+      color: var(--dialogue-player-text);
+      border-left: 4px solid var(--border-strong);
+    }
+
+    .flow-bubble.gm {
+      background-color: var(--dialogue-gm-bg);
+      color: var(--dialogue-gm-text);
+      border-right: 4px solid var(--accent);
+    }
+
+    .flow-label {
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: var(--accent-text);
+      line-height: 1.35;
+    }
+
+    .flow-row.gm-side .flow-label {
+      text-align: right;
+    }
+
+    /* Threat Lists (Page 3) */
+    .threat-intro {
+      font-size: 0.92rem;
+      margin: 0 0 14px;
+      padding: 10px 14px;
+      background-color: var(--surface-alt);
+      border-left: 4px solid var(--accent);
+    }
+
+    .clock-badge {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 0 5px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      vertical-align: middle;
+    }
+
+    .threat-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .threat-list li {
+      position: relative;
+      padding-left: 16px;
+      margin-bottom: 6px;
+      font-size: 0.88rem;
+    }
+
+    .threat-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .threat-list li::before {
+      content: "◆";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 0.68rem;
+      line-height: 2.0;
+      color: var(--accent-text);
+    }
+
+    .threat-clock-item {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Controlled Outcome Box (Page 3) */
+    .outcome-box {
+      background-color: var(--surface-alt);
+      border: 1px solid var(--border-strong);
+      border-top: 4px solid var(--accent);
+      padding: 16px 18px;
+      margin-top: 16px;
+    }
+
+    .outcome-box-title {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .outcome-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .outcome-list li {
+      padding: 6px 0;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    .outcome-list li:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .dice-tag {
+      display: inline-block;
+      min-width: 78px;
+      font-weight: 900;
+      color: var(--accent-text);
+      margin-right: 6px;
+    }
+
+    /* Overview Action List & Procedures (Page 0) */
+    .overview-action-wrap {
+      display: grid;
+      grid-template-columns: 1fr 165px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .action-ref-box {
+      background-color: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      padding: 10px 12px;
+    }
+
+    .action-ref-title {
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      color: var(--accent-text);
+      margin: 0 0 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .action-ref-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.82rem;
+      line-height: 1.65;
+    }
+
+    .action-ref-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      border-bottom: 1px solid var(--border);
+      padding: 2px 0;
+    }
+
+    .action-ref-list li:last-child {
+      border-bottom: none;
+    }
+
+    .action-ref-en {
+      font-size: 0.74rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .proc-list {
+      list-style: none;
+      counter-reset: proc-step;
+      margin: 6px 0 14px;
+      padding: 0;
+    }
+
+    .proc-list > li {
+      counter-increment: proc-step;
+      position: relative;
+      padding-left: 26px;
+      margin-bottom: 7px;
+      font-size: 0.91rem;
+    }
+
+    .proc-list > li::before {
+      content: counter(proc-step) ".";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-weight: 900;
+      color: var(--accent-text);
+    }
+
+    .proc-subhead {
+      margin: 14px 0 6px;
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      color: var(--text);
+      border-left: 4px solid var(--accent);
+      padding-left: 8px;
+    }
+
+    .proc-subhead-en {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-left: 6px;
+    }
+
+    /* Rules Reference & GM Reference Helpers */
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin: 8px 0 12px;
+    }
+
+    .ref-table th,
+    .ref-table td {
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .ref-table th {
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .ref-table tr:nth-child(even) td {
+      background-color: var(--surface-alt);
+    }
+
+    .three-col-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 10px 0 16px;
+    }
+
+    .kv-row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      border: 1px solid var(--border);
+      margin-bottom: 8px;
+      background-color: var(--surface-alt);
+    }
+
+    .kv-key {
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      border-left: 4px solid var(--accent);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .kv-key span {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #B8B8B8;
+    }
+
+    .kv-val {
+      padding: 8px 12px;
+      font-size: 0.87rem;
+    }
+
+    .compact-list {
+      list-style: none;
+      margin: 0 0 12px;
+      padding: 0;
+      font-size: 0.86rem;
+    }
+
+    .compact-list li {
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .compact-list li:last-child {
+      border-bottom: none;
+    }
+
+    .name-pool {
+      background-color: var(--surface-alt);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    .factor-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      padding: 6px 12px;
+      margin-bottom: 6px;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .factor-sign {
+      color: #D97373;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    /* Page Footer */
+    .doc-footer {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .two-col-grid,
+      .three-col-grid {
+        grid-template-columns: 1fr;
+      }
+      .kv-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      [id] {
+        scroll-margin-top: 68px;
+      }
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+        width: min(84vw, 300px);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .sidebar-backdrop.open {
+        display: block;
+      }
+      .mobile-header {
+        display: flex;
+      }
+      .mobile-title {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .mobile-actions {
+        flex-shrink: 0;
+      }
+      .icon-btn {
+        min-height: 36px;
+        padding: 6px 12px;
+      }
+      .nav-link {
+        padding: 10px 20px;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 16px 12px 48px;
+      }
+      .sheet-section {
+        padding: 18px 14px;
+        margin-bottom: 28px;
+      }
+      .sheet-header {
+        margin-bottom: 18px;
+        padding-bottom: 12px;
+      }
+      .sheet-title {
+        font-size: 1.3rem;
+      }
+      .sheet-title-en {
+        display: block;
+        margin-left: 0;
+        margin-top: 2px;
+        font-size: 0.84rem;
+      }
+      .sub-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .flow-row,
+      .flow-row.gm-side {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      .flow-row.gm-side .flow-label {
+        text-align: left;
+      }
+      .overview-action-wrap {
+        grid-template-columns: 1fr;
+      }
+      .ref-table {
+        font-size: 0.8rem;
+      }
+      .ref-table th,
+      .ref-table td {
+        padding: 5px 7px;
+      }
+      .dice-tag {
+        display: block;
+        min-width: 0;
+        margin-bottom: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-header">
+    <div class="mobile-title">BLADES IN THE DARK リファレンス</div>
+    <div class="mobile-actions">
+      <button type="button" class="icon-btn" id="mobileThemeBtn" aria-label="配色切り替え">配色切替</button>
+      <button type="button" class="icon-btn menu-btn" id="menuToggleBtn" aria-label="目次を開く">目次</button>
+    </div>
+  </div>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="目次ナビゲーション">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-sub">BLADES IN THE DARK</div>
+        <div class="sidebar-brand-title">ルール＆プレイシート<br>日本語版リファレンス</div>
+        <span class="sidebar-brand-ver">REFERENCE &amp; PLAYSHEETS</span>
+      </div>
+
+      <div class="sidebar-controls">
+        <button type="button" class="theme-btn" id="desktopThemeBtn">
+          <span>表示モード</span>
+          <span id="themeLabel">LIGHT</span>
+        </button>
+      </div>
+
+      <ul class="nav-list">
+        <li class="nav-group-label">基本ルール概要</li>
+        <li><a class="nav-link active" href="#page-0">基本ルール概要 (Simple Rules)</a></li>
+        <li><a class="nav-link nav-sublink" href="#p0-overview">基本判定の概要</a></li>
+        <li><a class="nav-link nav-sublink" href="#p0-procedures">判定手順 (Procedures)</a></li>
+
+        <li class="nav-group-label">ルール参照</li>
+        <li><a class="nav-link" href="#ref-1">ルール参照 1 (判定・協力・行動)</a></li>
+        <li><a class="nav-link" href="#ref-2">ルール参照 2 (報酬・悪名・DT)</a></li>
+        <li><a class="nav-link" href="#ref-gm">GM参照 (指針・街・導入判定)</a></li>
+
+        <li class="nav-group-label">プレイヤー指針</li>
+        <li><a class="nav-link" href="#page-1">悪党のムーブ (Scoundrel Moves)</a></li>
+        <li><a class="nav-link nav-sublink" href="#p1-cards">基本ムーブ一覧</a></li>
+        <li><a class="nav-link nav-sublink" href="#p1-daring">大胆なアクションの実行</a></li>
+        <li><a class="nav-link nav-sublink" href="#p1-options">追加オプション</a></li>
+
+        <li class="nav-group-label">GM指針</li>
+        <li><a class="nav-link" href="#page-2">GMのムーブ (GM Moves)</a></li>
+        <li><a class="nav-link nav-sublink" href="#p2-cards">GMムーブ一覧</a></li>
+        <li><a class="nav-link nav-sublink" href="#p2-action-roll">アクション・ロールと脅威</a></li>
+        <li><a class="nav-link nav-sublink" href="#p2-flow">会話と判定の例</a></li>
+
+        <li class="nav-group-label">脅威と判定</li>
+        <li><a class="nav-link" href="#page-3">脅威一覧 (Threats)</a></li>
+        <li><a class="nav-link nav-sublink" href="#p3-threats">状況別の脅威リスト</a></li>
+        <li><a class="nav-link nav-sublink" href="#p3-rules">1ロール決着と時計の運用</a></li>
+        <li><a class="nav-link nav-sublink" href="#p3-controlled">「有利」ポジションの判定結果</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+
+      <!-- ================= PAGE 0: SIMPLE RULES OVERVIEW ================= -->
+      <section class="sheet-section" id="page-0">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">基本ルール</span>
+            <h1 class="sheet-title">基本ルール概要<span class="sheet-title-en">SIMPLE RULES OVERVIEW</span></h1>
+          </div>
+          <div class="sheet-meta">BLADES IN THE DARK SHEETS, v8.2</div>
+        </header>
+
+        <div class="two-col-grid">
+          <!-- Left Column: Simple Rules Overview -->
+          <div class="col-stack" id="p0-overview">
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">アクション・ロール（ACTION ROLLS）</h2>
+                <span class="ref-badge">概要</span>
+              </div>
+              <div class="overview-action-wrap">
+                <div>
+                  <p>プレイヤーキャラクターが何か困難なことに挑むとき、どう決着がつくかを見るために<strong>アクション・ロール（Action Roll）</strong>を行う。ある行動が「困難」であるのは、PCの目標の前に何らかの形で危険または厄介な障害が立ちはだかっている場合だ。</p>
+                  <p>プレイヤーはキャラクターの<strong>アクション・レーティング（Action rating）</strong>（1〜4）に等しい数の6面ダイス（d6）を振る。どのアクション・レーティングを使うかは、キャラクターが作中で何をしているかによって決まる。戦っているなら<strong>《白兵（Skirmish）》</strong>、魔術を使っているなら<strong>《霊視（Attune）》</strong>といった具合だ。右のアクション一覧を参照のこと。</p>
+                </div>
+                <aside class="action-ref-box" aria-label="12種類のアクション一覧">
+                  <div class="action-ref-title">アクション一覧</div>
+                  <ul class="action-ref-list">
+                    <li><strong>霊視</strong><span class="action-ref-en">Attune</span></li>
+                    <li><strong>威圧</strong><span class="action-ref-en">Command</span></li>
+                    <li><strong>社交</strong><span class="action-ref-en">Consort</span></li>
+                    <li><strong>手練</strong><span class="action-ref-en">Finesse</span></li>
+                    <li><strong>狩猟</strong><span class="action-ref-en">Hunt</span></li>
+                    <li><strong>隠密</strong><span class="action-ref-en">Prowl</span></li>
+                    <li><strong>白兵</strong><span class="action-ref-en">Skirmish</span></li>
+                    <li><strong>調査</strong><span class="action-ref-en">Study</span></li>
+                    <li><strong>観察</strong><span class="action-ref-en">Survey</span></li>
+                    <li><strong>説得</strong><span class="action-ref-en">Sway</span></li>
+                    <li><strong>工作</strong><span class="action-ref-en">Tinker</span></li>
+                    <li><strong>破壊</strong><span class="action-ref-en">Wreck</span></li>
+                  </ul>
+                </aside>
+              </div>
+              <p>各ロールでは、<strong>ポジション（Position）</strong>と<strong>効果レベル（Effect level）</strong>を設定する。ポジションはそのロールがPCにとってどれほど危険かを示す。<strong>有利（Controlled）</strong>なポジションはあまり危険ではない。<strong>危険（Risky）</strong>なポジションはかなり危険だ。<strong>絶望（Desperate）</strong>なポジションは非常に危険である。効果レベルはこのロールが状況にどれほどの影響を与えるかを示す。<strong>絶大（Great）</strong>効果は大きな影響力を持ち、手強い障害を一度で乗り越えるのに十分だ。<strong>標準（Standard）</strong>効果はまずまずの影響力――標準的な障害を乗り越えるのに十分な効果である。<strong>限定的（Limited）</strong>効果は影響力が乏しく、障害を乗り越えるのに複数のロールが必要になる。</p>
+              <p>ロールの結果は、<strong>出たダイスのうち最も高い1個の出目</strong>によって決まる。<strong>最高の出目が6なら完全成功（full success）</strong>：PCのアクションは効果を発揮し、厄介事は一切起きない。<strong>最高の出目が4または5なら部分的成功（partial success）</strong>：PCのアクションは効果を発揮するが、厄介事（代償）が1つ発生する。<strong>最高の出目が1-3なら失敗（failure）</strong>：PCのアクションは効果を発揮せず、さらに厄介事も発生する。</p>
+              <p>基本的に、誰かがアクション・ロールをするとき、卓の全員がその「6」を待ち望むことになる。6が出なければ、PCのポジションに応じた何らかの厄介事や悪い結果が起きる。もしプレイヤーが<strong>6を2個以上出したならクリティカル成功（critical success）</strong>――何らかの追加の恩恵を得る。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">フォーチュン・ロール（FORTUNE ROLLS）</h2>
+                <span class="ref-badge">概要</span>
+              </div>
+              <p><strong>フォーチュン・ロール（Fortune Roll）</strong>は、ある物事が「どれほど」現れるかを教えてくれる。ポジションも効果レベルもなく、ある特性を表すd6のダイスプールを振るだけだ。たとえば、GMは悪党たちの敵の士気を見て、踏みとどまって戦えるかを確かめるためにフォーチュン・ロールをすることがある。彼らが勇敢なら、GMは3d6を振ってどれほど上手く持ちこたえるかを見るかもしれない。6なら間違いなく踏みとどまって戦う。4/5なら数人が逃げ出すかもしれない。1-3なら全員が総崩れになって逃走する。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">レジスタンス・ロール（RESISTANCE ROLLS）</h2>
+                <span class="ref-badge">概要</span>
+              </div>
+              <p>PCは、GMが与えた悪い代償（Consequence）を阻止または回避するために<strong>レジスタンス・ロール（抵抗判定）</strong>を行うことができる。たとえばGMが「君はやり遂げたが、壁をよじ登るところをニーラ（Neela）に撃たれた。レベル2の負傷（Harm）を受ける」と言ったなら、プレイヤーは「いやだ！ それに抵抗（レジスト）する」と宣言できる。<strong>PCが代償に抵抗するとき、それは常に効果を発揮する</strong>――その代償は（状況に応じて）より軽いものに軽減されるか、完全に回避される。</p>
+              <p>レジスタンス・ロールは、PCがどれだけの<strong>ストレス（Stress）</strong>を受けるかを決める（<strong>6マイナス出た最高のダイス目</strong>に等しいストレスを受ける）。</p>
+            </div>
+          </div>
+
+          <!-- Right Column: Procedures -->
+          <div class="col-stack" id="p0-procedures">
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">判定手順（PROCEDURES）</h2>
+                <span class="ref-badge">手順一覧</span>
+              </div>
+
+              <h3 class="proc-subhead">アクション・ロール<span class="proc-subhead-en">ACTION ROLL</span></h3>
+              <ol class="proc-list">
+                <li>プレイヤーは、そのアクションで達成したい<strong>目標（Goal）</strong>を宣言する。</li>
+                <li>プレイヤーは、作中でキャラクターが行っていることに合致する<strong>アクション・レーティング</strong>を選ぶ。</li>
+                <li>GMはそのロールの<strong>ポジション（Position）</strong>を設定する。</li>
+                <li>GMはそのアクションの<strong>効果レベル（Effect level）</strong>を設定する。</li>
+                <li><strong>ボーナス・ダイス</strong>を追加する。</li>
+                <li><strong>プレイヤーがダイスを振り</strong>、結果を判定する。</li>
+              </ol>
+
+              <h3 class="proc-subhead">ボーナス・ダイス<span class="proc-subhead-en">BONUS DICE</span></h3>
+              <ul class="diamond-list">
+                <li>仲間からの手助けで <strong>+1d</strong>（手助けする仲間が1ストレスを受ける）</li>
+                <li><strong>無理をする（Push yourself）</strong>か、<strong>悪魔の取引（Devil's Bargain）</strong>を受け入れるなら <strong>+1d</strong></li>
+              </ul>
+
+              <h3 class="proc-subhead">フォーチュン・ロール<span class="proc-subhead-en">FORTUNE ROLL</span></h3>
+              <ol class="proc-list">
+                <li>GMは、その状況に当てはまる作中の特性（士気、頑丈さ、品質など）に基づき、ダイスプール（通常1〜4個）を決定する。</li>
+                <li>ダイスを振り、最も高い1個の出目を読み取って、その特性が目の前の状況でどれほど強く発揮されたかを決定する。</li>
+              </ol>
+
+              <h3 class="proc-subhead">レジスタンス・ロール（抵抗判定）<span class="proc-subhead-en">RESISTANCE ROLL</span></h3>
+              <ol class="proc-list">
+                <li>プレイヤーは、発生した代償に抵抗（レジスト）することを選ぶ。</li>
+                <li>GMは、状況の詳細に応じてその代償がレジスタンス・ロールによって軽減されるか、無効化されるかを判断する。</li>
+                <li>GMは、目の前の代償に対応する属性――<strong>洞察（Insight）</strong>、<strong>胆力（Prowess）</strong>、<strong>意志（Resolve）</strong>のいずれかを決定する。</li>
+                <li>プレイヤーはその属性のダイスを振る。</li>
+                <li>PCは <strong>6マイナス出た最高のダイス目</strong> に等しいストレスを受け、代償は無効化または軽減される。</li>
+              </ol>
+
+              <h3 class="proc-subhead">フラッシュバック（回想）<span class="proc-subhead-en">FLASHBACKS</span></h3>
+              <ol class="proc-list">
+                <li>プレイヤーは、現在の状況に影響を与えるような過去に行った行動への<strong>フラッシュバック</strong>を行いたいと宣言する。</li>
+                <li>GMはフラッシュバックの場面を手短に描写する。プレイヤーはキャラクターが何をするかを描写する。</li>
+                <li>GMはフラッシュバック行動に対する<strong>ストレス・コスト</strong>を設定する：
+                  <ul class="diamond-list">
+                    <li><strong>0ストレス</strong>：容易に機会が得られたはずの、ありふれた行動。</li>
+                    <li><strong>1ストレス</strong>：複雑な行動、またはありそうもない機会。</li>
+                    <li><strong>2（またはそれ以上）ストレス</strong>：特別な機会や万が一の備えを伴う、手の込んだ行動。</li>
+                  </ul>
+                </li>
+                <li>PCはストレスを支払い、そのフラッシュバック行動を試みる。</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= RULES REFERENCE 1 (p.26) ================= -->
+      <section class="sheet-section" id="ref-1">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">ルール参照 1</span>
+            <h1 class="sheet-title">ルール参照 1<span class="sheet-title-en">RULES REFERENCE 1</span></h1>
+          </div>
+          <div class="sheet-meta">BLADES IN THE DARK SHEETS, v8.2</div>
+        </header>
+
+        <div class="two-col-grid">
+          <!-- Left Column: Action Roll & Resistance Roll -->
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">アクション・ロール（ACTION ROLL）</h2>
+                <span class="ref-badge">ダイスプール &amp; 結果</span>
+              </div>
+              <ul class="diamond-list">
+                <li>使用する<strong>アクション・レーティング（Action rating）</strong>のドット1つにつき <strong>1d</strong></li>
+                <li><strong>+1d</strong>：仲間からの<strong>手助け（Assistance）</strong>がある場合</li>
+                <li><strong>+1d</strong>：<strong>無理をする（Push yourself）</strong>、または<strong>悪魔の取引（Devil's Bargain）</strong>を受け入れる場合</li>
+              </ul>
+
+              <div class="outcome-box">
+                <h3 class="outcome-box-title">有利（CONTROLLED）— 主導権を握り、圧倒的優位を活かす</h3>
+                <ul class="outcome-list">
+                  <li><span class="dice-tag">クリティカル</span><strong>効果の増大（increased effect）</strong>を伴って成し遂げる。</li>
+                  <li><span class="dice-tag">6</span>成し遂げる。</li>
+                  <li><span class="dice-tag">4/5</span>ためらう。撤退して別のアプローチを試すか、あるいは<strong>軽微な代償（minor consequence）</strong>を伴ってやり遂げる：軽微な厄介事、効果の減少、軽微な負傷、または危険なポジションに陥る。</li>
+                  <li><span class="dice-tag">1-3</span>怯む。<strong>危険（risky）</strong>な好機に飛び込んで押し切るか、撤退して別のアプローチを試す。</li>
+                </ul>
+              </div>
+
+              <div class="outcome-box">
+                <h3 class="outcome-box-title">危険（RISKY）— 互角に渡り合い、銃火の下で賭けに出る</h3>
+                <ul class="outcome-list">
+                  <li><span class="dice-tag">クリティカル</span><strong>効果の増大（increased effect）</strong>を伴って成し遂げる。</li>
+                  <li><span class="dice-tag">6</span>成し遂げる。</li>
+                  <li><span class="dice-tag">4/5</span>成し遂げるが、<strong>代償</strong>が生じる：負傷を受ける、厄介事が起きる、効果の減少、絶望的なポジションに陥る。</li>
+                  <li><span class="dice-tag">1-3</span>事態が悪化する。負傷を受ける、厄介事が起きる、絶望的なポジションに陥る、この好機を失う。</li>
+                </ul>
+              </div>
+
+              <div class="outcome-box">
+                <h3 class="outcome-box-title">絶望（DESPERATE）— 能力を超えて挑み、深刻な危機に瀕する</h3>
+                <ul class="outcome-list">
+                  <li><span class="dice-tag">クリティカル</span><strong>効果の増大（increased effect）</strong>を伴って成し遂げる。</li>
+                  <li><span class="dice-tag">6</span>成し遂げる。</li>
+                  <li><span class="dice-tag">4/5</span>成し遂げるが、<strong>代償</strong>が生じる：重度の負傷を受ける、深刻な厄介事が起きる、効果の減少。</li>
+                  <li><span class="dice-tag">1-3</span>最悪の結果となる。重度の負傷を受ける、深刻な厄介事が起きる、この行動の好機を失う。</li>
+                </ul>
+              </div>
+
+              <div class="quote-box">
+                <strong>絶望アクションの経験値：</strong>絶望（Desperate）なアクションをロールするたび、そのアクションが属する<strong>属性のXPを1マーク</strong>する。<br>
+                GMは状況に応じて代償を設定する。記載された代償のうち1つ、いくつか、あるいはすべてを受けることがある。PCは<strong>レジスタンス・ロール</strong>で代償の回避・軽減を試みることができる。
+              </div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">レジスタンス・ロール（RESISTANCE ROLL）</h2>
+                <span class="ref-badge">抵抗判定</span>
+              </div>
+              <div class="kv-row">
+                <div class="kv-key">ダイスプール<span>ATTRIBUTE</span></div>
+                <div class="kv-val">対応する<strong>属性（Attribute）</strong>のドット1つにつき <strong>1d</strong></div>
+              </div>
+              <p>代償を軽減または回避し、<strong>6マイナス出た最高のダイス目</strong>に等しいストレスを受ける。レジスタンスで<strong>クリティカル</strong>を出したときは、<strong>ストレスを1回復（clear 1 stress）</strong>する。</p>
+            </div>
+          </div>
+
+          <!-- Right Column: Teamwork & Actions -->
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">チームワーク（TEAMWORK）</h2>
+                <span class="ref-badge">協力行動</span>
+              </div>
+              <div class="kv-row">
+                <div class="kv-key">手助け<span>ASSIST</span></div>
+                <div class="kv-val"><strong>1ストレス</strong>を受けて別のプレイヤーに <strong>+1d</strong> を与える。ロールによる代償を自分も受けることがある。1つのロールを手助けできるのは1人だけ。</div>
+              </div>
+              <div class="kv-row">
+                <div class="kv-key">グループを率いる<span>LEAD A GROUP</span></div>
+                <div class="kv-val"><strong>グループ・アクション</strong>を率いる。参加する各キャラクターがロールし、最も良い1個の出目が全員に適用されるアクション結果となる。（リーダーは1-3を出した仲間1人につき1ストレスを受ける。）</div>
+              </div>
+              <div class="kv-row">
+                <div class="kv-key">かばう<span>PROTECT</span></div>
+                <div class="kv-val">仲間のために危険に立ち向かう。割って入り、仲間の代わりに代償を引き受ける。望むなら通常通りレジスタンス・ロールを行える。</div>
+              </div>
+              <div class="kv-row">
+                <div class="kv-key">お膳立て<span>SET UP</span></div>
+                <div class="kv-val">自分のアクションで別キャラクターのお膳立てをする。成功すれば、それに続くチームメイトは<strong>効果+1段階</strong>または<strong>ポジション改善</strong>を得る。</div>
+              </div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">アクション一覧（ACTIONS）</h2>
+                <span class="ref-badge">12種の行動</span>
+              </div>
+              <ul class="diamond-list">
+                <li><strong>《霊視（Attune）》</strong>：霊やゴースト・フィールドに同調する。エレクトロプラズムのエネルギーを操る。幽霊を知覚し意思疎通する。霊光科学（スペクトロロジー）を理解する。</li>
+                <li><strong>《威圧／指揮（Command）》</strong>：人格の力で服従を強いる。脅迫や威嚇を行う。クルーのギャングを率いて行動する。</li>
+                <li><strong>《社交（Consort）》</strong>：出身・経歴・友人・ライバルといった人脈と交わり、資源・情報・人物・場所へのアクセスを得る。</li>
+                <li><strong>《手練（Finesse）》</strong>：誰かの懐から物をすり取る。巧妙な目くらましや手先の早業を使う。乗り物や騎乗動物を操る。</li>
+                <li><strong>《狩猟（Hunt）》</strong>：標的を追跡する。位置や動向の情報を集める。遠距離から精密な射撃攻撃を行う。</li>
+                <li><strong>《隠密（Prowl）》</strong>：人目につかず忍び歩き、障害物を越える。登攀・水泳・疾走・跳躍・受け身を行う。不意打ちの近接暴力（闇討ち、喉切り、ブラックジャック等）を仕掛ける。</li>
+                <li><strong>《白兵（Skirmish）》</strong>：近接戦闘で敵と渡り合う。突撃する、あるいは防衛線を維持する。乱闘や組み打ちを行う。</li>
+                <li><strong>《調査（Study）》</strong>：人物・文書・物品を精密に精査して情報を集め、知識を応用する。深い理解を得る。調査研究を行う。</li>
+                <li><strong>《観察（Survey）》</strong>：場所や状況を観察して何が起きているかを把握する。危険が起きる前に察知する。好機や弱点についての情報を集める。</li>
+                <li><strong>《説得（Sway）》</strong>：魅力・論理・欺瞞・変装・ハッタリで誰かを動かす。人心操作や誘惑によって態度や行動を変えさせる。</li>
+                <li><strong>《工作（Tinker）》</strong>：機械仕掛けを製作・改造・無力化・修理する。罠を解除し、錠前や金庫を開ける。街中のありふれたぜんまい仕掛けやエレクトロプラズム装置を自分の有利に使う。</li>
+                <li><strong>《破壊（Wreck）》</strong>：荒々しい腕力または計算された破壊工作で場所・物品・障害物を打ち壊す。力ずくで防壁を突破する。陽動や混乱を生み出す。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= RULES REFERENCE 2 (p.27) ================= -->
+      <section class="sheet-section" id="ref-2">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">ルール参照 2</span>
+            <h1 class="sheet-title">ルール参照 2<span class="sheet-title-en">RULES REFERENCE 2</span></h1>
+          </div>
+          <div class="sheet-meta">BLADES IN THE DARK SHEETS, v8.2</div>
+        </header>
+
+        <div class="motto-bar" style="margin-top:0; margin-bottom:22px;">
+          <span class="motto-label">処理順</span>
+          スコア終了後は、<strong>1. 報酬（Payoff） → 2. 悪名（Heat） → 3. 絡み合い（Entanglements） → 4. ダウンタイム（Downtime）</strong>の順に解決する。
+        </div>
+
+        <div class="two-col-grid">
+          <!-- Left Column: Payoff & Entanglements -->
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">1. 報酬（PAYOFF）</h2>
+                <span class="ref-badge">評判 &amp; コイン</span>
+              </div>
+              <p>クルーはスコア1回につき基本値として<strong>2評判（REP）</strong>を得る。標的が上位Tierの勢力なら、Tier差1につき <strong>+1評判</strong>。標的が下位TierならTier差1につき <strong>-1評判</strong>（最小0）。（もし仕事を完全に秘密裏に済ませたなら、代わりに評判は0になる。）</p>
+              <p>また、作戦の性質に応じた<strong>コイン（COIN）</strong>の報酬も得る：</p>
+              <ul class="diamond-list">
+                <li><strong>2コイン</strong>：小仕事；いくつかの財布を掠める程度。</li>
+                <li><strong>4コイン</strong>：小規模な仕事；手提げ金庫1つ分。</li>
+                <li><strong>6コイン</strong>：標準的なスコア；まずまずの戦利品。</li>
+                <li><strong>8コイン</strong>：大きなスコア；かなりの戦利品。</li>
+                <li><strong>10+コイン</strong>：大掛かりなスコア；見事な戦利品。</li>
+              </ul>
+              <p>地区ボスや上位組織に上納金を納めている場合は、<strong>自クルーのTier+1</strong> に等しいコインを差し引く。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">3. 絡み合い（ENTANGLEMENTS）</h2>
+                <span class="ref-badge">報いの発生</span>
+              </div>
+              <p>報酬の後、<strong>手配度（Wanted Level）</strong>に等しい数のダイスを振り（手配度0なら2個振って低い方を採用）、現在の<strong>悪名（Heat）</strong>の列から結果を読む。</p>
+
+              <div class="three-col-grid">
+                <table class="ref-table">
+                  <thead><tr><th colspan="2">悪名 0-3 (HEAT 0-3)</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>1-3</strong></td><td>ギャングの揉め事 / いつもの容疑者</td></tr>
+                    <tr><td><strong>4/5</strong></td><td>ライバル / 騒がしき死者</td></tr>
+                    <tr><td><strong>6</strong></td><td>協力要請</td></tr>
+                  </tbody>
+                </table>
+                <table class="ref-table">
+                  <thead><tr><th colspan="2">悪名 4/5 (HEAT 4/5)</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>1-3</strong></td><td>ギャングの揉め事 / 事情聴取</td></tr>
+                    <tr><td><strong>4/5</strong></td><td>報復 / 騒がしき死者</td></tr>
+                    <tr><td><strong>6</strong></td><td>武力誇示</td></tr>
+                  </tbody>
+                </table>
+                <table class="ref-table">
+                  <thead><tr><th colspan="2">悪名 6+ (HEAT 6+)</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>1-3</strong></td><td>寝返り / 尋問</td></tr>
+                    <tr><td><strong>4/5</strong></td><td>悪魔の注目 / 武力誇示</td></tr>
+                    <tr><td><strong>6</strong></td><td>逮捕</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <ul class="compact-list">
+                <li><strong>逮捕（Arrest）</strong>：捜査官が治安判事へ起訴用の証拠ファイルを提出し、ブルーコートが逮捕隊を送り込む。<strong>手配度+3コイン</strong>を払って買収するか、誰かを身代わりに引き渡す（悪名がリセットされる）か、逃亡を試みる。</li>
+                <li><strong>協力要請（Cooperation）</strong>：関係値+3の勢力が頼み事をしてくる。引き受けるか、友好勢力のTier1につき<strong>1評判</strong>を失うか、関係値を1下げる。+3の勢力がなければ絡み合いは起きない。</li>
+                <li><strong>悪魔の注目（Demonic Notice）</strong>：悪魔が暗い取引を持ちかけてくる。受け入れるか、興味を失うまで身を隠す（<strong>3評判を失う</strong>）か、別の方法で対処する。</li>
+                <li><strong>寝返り（Flipped）</strong>：接触者・顧客・依頼人・客層の一部が、悪名の高まりにより他勢力へ寝返る。</li>
+                <li><strong>ギャングの揉め事（Gang Trouble）</strong>：手下（またはコホート）が欠点により問題を起こす。<strong>自クルーTier+1の評判</strong>を失って面目を保つか、構成員を見せしめにするか、被害側からの報復を受ける。欠点のある手下がいないなら発生しない。</li>
+                <li><strong>尋問（Interrogation）</strong>：ブルーコートがPC1人を連行して尋問する。<strong>3コイン</strong>で買収するか、痛めつけられて（<strong>レベル2の負傷</strong>）知っていることを吐く（<strong>+3悪名</strong>）。それぞれの代償には個別に抵抗可能。</li>
+                <li><strong>事情聴取（Questioning）</strong>：ブルーコートがNPCの構成員や協力者を拘束して尋問する。フォーチュン・ロールでどれだけ喋るか判定（<strong>1-3：+2悪名、4/5：+1悪名</strong>）するか、<strong>2コイン</strong>で買収する。</li>
+                <li><strong>報復（Reprisals）</strong>：敵対勢力がPC側（友人・協力者・悪癖提供者）に仕掛けてくる。敵Tier1につき<strong>1評判と1コイン</strong>を払って謝罪するか、手を出させるか、やり返して格の違いを見せつける。</li>
+                <li><strong>ライバル（Rivals）</strong>：中立勢力が圧力をかけ、PC側（友人・協力者・悪癖提供者）を脅かす。相手Tier1につき<strong>1評判または1コイン</strong>を失うか、立ち向かって相手との関係値を1下げる。</li>
+                <li><strong>武力誇示（Show of Force）</strong>：関係値がマイナスの勢力がPCの縄張り（Holdings）に仕掛けてくる。<strong>主張（Claim）を1つ渡す</strong>か、抗争状態（関係値-3）に入る。主張がなければ代わりに<strong>Holdを1失う</strong>。</li>
+                <li><strong>騒がしき死者（Unquiet Dead）</strong>：野良の霊が引き寄せられる（過去の犠牲者かもしれない）。ウィスパーやレイル・ジャックを雇って消滅・追放するか、自力で対処する。</li>
+                <li><strong>いつもの容疑者（The Usual Suspects）</strong>：ブルーコートがクルー周辺の人物（友人や悪癖提供者）を連行する。フォーチュン・ロールで尋問に耐えられるか判定（<strong>1-3：+2悪名、4/5：レベル2の負傷</strong>）するか、<strong>1コイン</strong>で買収する。</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right Column: Heat & Downtime -->
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">2. 悪名（HEAT）</h2>
+                <span class="ref-badge">注目度</span>
+              </div>
+              <p>スコアや敵対勢力との衝突後、クルーは<strong>悪名（HEAT）</strong>を受ける。目立つ・コネのある標的相手なら <strong>+1悪名</strong>。敵対勢力の縄張り（Hostile turf）なら <strong>+1悪名</strong>。抗争中（At war）なら <strong>+1悪名</strong>。殺人が伴ったなら <strong>+2悪名</strong>。</p>
+              <ul class="diamond-list">
+                <li><strong>0悪名</strong>：手際よく静か；露出は低い。</li>
+                <li><strong>2悪名</strong>：抑え込まれている；標準的な露出。</li>
+                <li><strong>4悪名</strong>：派手で混沌としている；高い露出。</li>
+                <li><strong>6悪名</strong>：常軌を逸している；壊滅的な露出。</li>
+              </ul>
+              <p>さらに、セッション中の代償や悪魔の取引による追加悪名を加える。</p>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">4. ダウンタイム（DOWNTIME）</h2>
+                <span class="ref-badge">幕間の行動</span>
+              </div>
+              <p>スコアの合間に自由時間と一時の安息を得たとき、下記リストから<strong>2つのダウンタイム行動</strong>を実行できる。また、防具の使用回数もすべて回復する。ダウンタイム中は、<strong>1コインまたは1評判</strong>を支払うごとに追加の行動を1つ実行できる。</p>
+              <p>どのダウンタイム・ロールでも、友人や協力者の手助けがあれば <strong>+1d</strong>。ロール後、手助けを雇ったり賄賂を払ったりして<strong>1コイン支払うごとに結果段階を1つ上げられる</strong>（1-3→4/5、4/5→6、6→クリティカル）。</p>
+
+              <div class="kv-row">
+                <div class="kv-key">資産の獲得<span>ACQUIRE ASSET</span></div>
+                <div class="kv-val">資産の一時的な使用権を得る。クルーの<strong>Tier</strong>をロールする（<strong>1-3：粗悪 Tier-1、4/5：標準 Tier、6：上質 Tier+1、クリティカル：卓越 Tier+2</strong>）。卓越を超える上位Tierを得るには1段階につき2コインを払う。</div>
+              </div>
+              <div class="kv-row">
+                <div class="kv-key">長期プロジェクト<span>LONG TERM PROJECT</span></div>
+                <div class="kv-val">手段があるなら長期プロジェクトを進める。適切な特性をロールし、結果に応じた目盛りを時計に進める（<strong>1-3：1つ、4/5：2つ、6：3つ、クリティカル：5つ</strong>）。</div>
+              </div>
+              <div class="kv-row">
+                <div class="kv-key">回復<span>RECOVER</span></div>
+                <div class="kv-val">治療を受けて<strong>回復時計（healing clock）</strong>を進める（長期プロジェクトと同様）。時計が満ちると、すべての負傷レベルが1段階ずつ軽減される。</div>
+              </div>
+              <div class="kv-row">
+                <div class="kv-key">悪名の軽減<span>REDUCE HEAT</span></div>
+                <div class="kv-val">どのように悪名を減らすかを語り、<strong>アクション</strong>をロールする。結果段階に応じて悪名を減らす（<strong>1-3：1、4/5：2、6：3、クリティカル：5</strong>）。</div>
+              </div>
+              <div class="kv-row">
+                <div class="kv-key">訓練<span>TRAIN</span></div>
+                <div class="kv-val">属性またはプレイブックに<strong>1 XP</strong>をマークする（クルーに対応する訓練アップグレードがあれば <strong>+1 XP</strong>）。1回のダウンタイムにつき、同じXPトラックは1回しか訓練できない。</div>
+              </div>
+              <div class="kv-row">
+                <div class="kv-key">悪癖に耽る<span>INDULGE VICE</span></div>
+                <div class="kv-val">悪癖提供者を訪ね、<strong>最も低い属性</strong>に等しい数のダイスを振る。出た最高の出目に等しいストレスを回復する。記入済みのストレスより多く回復したら<strong>耽溺（Overindulge）</strong>となる。ダウンタイム中に悪癖に耽らない（または耽れない）場合は、自分の<strong>トラウマ数に等しいストレス</strong>を受ける。</div>
+              </div>
+
+              <div class="quote-box">
+                <strong>耽溺（OVERINDULGE）の代償：</strong>悪癖を得る際またはその影響下で不始末をしでかす。次から1つ選ぶ：<br>
+                ◆ <strong>トラブルを招く（Attract Trouble）</strong>：追加の絡み合いを選ぶかロールする。<br>
+                ◆ <strong>自慢する（Brag）</strong>：自分たちの悪行を吹聴する。<strong>+2悪名</strong>。<br>
+                ◆ <strong>行方不明（Lost）</strong>：このPCが深酒・放蕩から戻るまで別キャラクターをプレイする。<br>
+                ◆ <strong>取引停止（Tapped）</strong>：現在の悪癖提供者に縁を切られる。新しい仕入れ先を探す必要がある。
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= GM REFERENCE (p.28) ================= -->
+      <section class="sheet-section" id="ref-gm">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">GM参照</span>
+            <h1 class="sheet-title">GM参照シート<span class="sheet-title-en">GM REFERENCE</span></h1>
+          </div>
+          <div class="sheet-meta">BLADES IN THE DARK SHEETS, v8.2</div>
+        </header>
+
+        <div class="two-col-grid">
+          <!-- Left Column: GM Goals/Principles/Actions + Names/Looks/Descriptors + Consequences/Effect -->
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">GMの目標・原則・行動（GOALS / PRINCIPLES / ACTIONS）</h2>
+                <span class="ref-badge">GM指針</span>
+              </div>
+              <div class="sub-grid-2">
+                <div>
+                  <h3 class="proc-subhead">GMの目標<span class="proc-subhead-en">GM GOALS</span></h3>
+                  <ul class="diamond-list">
+                    <li>何が起きるか確かめるためにプレイする。</li>
+                    <li>ダスクヴォールに命を吹き込む。</li>
+                    <li>世界を誠実に描写する。</li>
+                  </ul>
+                  <h3 class="proc-subhead">GMの原則<span class="proc-subhead-en">GM PRINCIPLES</span></h3>
+                  <ul class="diamond-list">
+                    <li>PCたちのファンであれ。</li>
+                    <li>すべてをフィクション（作中の描写）から生じさせよ。</li>
+                    <li>執着せず軽く握れ（Hold on lightly）。</li>
+                    <li>キャラクターに語りかけよ。</li>
+                    <li>プレイヤーに語りかけよ。</li>
+                    <li>憑かれた筆致で世界を描け。</li>
+                    <li>工業的なスプロールで彼らを取り囲め。</li>
+                    <li>リスクを考慮せよ。</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="proc-subhead">GMの行動<span class="proc-subhead-en">GM ACTIONS</span></h3>
+                  <p>物事が動き出すとき：</p>
+                  <ul class="diamond-list">
+                    <li><strong>目標は何か？（What's your goal?）</strong></li>
+                    <li><strong>どのプランにした？（What plan did you make?）</strong>（そして詳細は？）</li>
+                  </ul>
+                  <p>物事が進行中のとき：</p>
+                  <ul class="diamond-list">
+                    <li><strong>どうやってそれをする？（How do you do that?）</strong>（どのアクションを使う？）</li>
+                    <li><strong>目標は何か？（What's your goal?）</strong>（効果は何か？）</li>
+                  </ul>
+                  <p style="font-size:0.86rem; line-height:1.65;">
+                    危機の瞬間へカットせよ ／ 危険が襲う前に前兆を示せ ／ 代償を告げて問いかけよ ／ <strong>悪魔の取引を提示せよ</strong> ／ 進捗時計を作るか進めよ ／ プレイヤーに問いかけよ ／ 行動の波紋をネットワーク全体に広げよ ／ 画面外でも思考せよ。<br>
+                    <strong>どうする？（What do you do?）</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">即興NPC用プール（NAMES / LOOKS / DESCRIPTORS）</h2>
+                <span class="ref-badge">早見リスト</span>
+              </div>
+              <div class="name-pool">
+                <strong>名前（NAMES）：</strong>Adric, Aldo, Amison, Andrel, Arcy, Arden, Arilyn, Arquo, Arvus, Ashlyn, Branon, Brace, Brance, Brena, Bricks, Candra, Canter, Carissa, Carro, Casslyn, Cavelle, Clave, Corille, Cross, Crowl, Cyrene, Daphnia, Drav, Edlun, Emeline, Grell, Helles, Hix, Holtz, Kamelin, Kelyr, Kobb, Kristov, Laudius, Lauria, Lenia, Lizete, Lorette, Lucella, Lynthia, Mara, Milos, Morlan, Myre, Narcus, Naria, Noggs, Odrienne, Orlan, Phin, Polonia, Quess, Remira, Ring, Roethe, Sesereth, Sethla, Skannon, Stavrul, Stev, Syra, Talitha, Tesslyn, Thena, Timoth, Tocker, Una, Vaurin, Veleris, Veretta, Vestine, Vey, Volette, Vond, Weaver, Wester, Zamira.
+              </div>
+              <div class="name-pool">
+                <strong>家名（FAMILY NAMES）：</strong>Arran, Athanoch, Basran, Boden, Booker, Ankhayat, Bowmore, Breakiron, Brogan, Clelland, Clermont, Coleburn, Comber, Daava, Dalmore, Danfield, Dunvil, Edrad, Farros, Grine, Haig, Helker, Helles, Hellyers, Jayan, Jeduin, Kardera, Karstas, Keel, Kessarin, Kinclaith, Lomond, Maroden, Michter, Morriston, Penderyn, Prichard, Rowan, Salkara, Sevoy, Skelkallan, Slane, Strangford, Strathmill, Templeton, Tyrconnell, Vale, Vedat, Walund.
+              </div>
+              <div class="name-pool">
+                <strong>通り名（ALIASES）：</strong>Bell, Birch, Bird, Bliss, Bricks, Bug, Chime, Coil, Cricket, Cross, Crow, Echo, Flint, Frog, Frost, Grip, Hook, Ink, Junker, Mist, Moon, Nail, Needle, Ogre, Pool, Ring, Ruby, Silver, Skinner, Song, Spur, Tackle, Thistle, Thorn, Tick Tock, Trick, Vixen, Whip, Wicker.
+              </div>
+              <div class="name-pool">
+                <strong>容姿・服装（LOOKS）：</strong>男性、女性、曖昧、隠蔽 ／ 愛想よい、陰気、利発、陰鬱、整った、やつれた、痩せ型、大柄、彫りの深い、屈強、がっしり、傷跡、荒々しい、人目を引く、愛らしい、端正、華奢、繊細、ふっくら、ずんぐり、風雨に晒された、冷たい、悲しげ、厳しい、開放的、気だるげ、冷静、激しい ／ 三角帽、ロングコート、フードとヴェール、ショートクローク、ニット帽、細身のジャケット、フード付きコート、ロングブーツ、作業用ブーツ、仮面とローブ、スーツとベスト、襟付きシャツ、サスペンダー、粗末なチュニック、スカートとブラウス、フィットしたドレス、厚手のクローク、グレートコート、柔らかなブーツ、ゆったりした絹服、洒落たズボン、蝋引きのコート、長いスカーフ、革装束、ウナギ革ボディスーツ、毛皮と生皮、拾い集めた制服、ボロ服、ぴったりしたレギンス
+              </div>
+              <div class="name-pool">
+                <strong>都市の描写語（CITY DESCRIPTORS）：</strong>煤まみれ、石畳、薄暗い、インクのような闇、炊事の匂い、油の浮いた水たまり、銀の月光、霧に包まれた、湿った、冷気、吹きさらし、影の濃い、レンガ壁、反響、煙突、ガス灯、電灯、馬車、時計塔、ランタン、パイプ煙、運河、ゴンドラ、雨に濡れた、ガーゴイル、廃墟、尖塔、橋、歩道、足場、路地、貯水槽、下水道、軋む機械、鉄細工。
+              </div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">代償と効果（CONSEQUENCES &amp; EFFECT）</h2>
+                <span class="ref-badge">判定処理</span>
+              </div>
+              <p><strong>代償（CONSEQUENCES）：</strong>厄介事（時計を1〜3目盛り進める。または新たな障害・脅威が出現） ／ 効果の減少 ／ 負傷を受ける（1-3） ／ 好機を失う ／ より悪いポジションに陥る。</p>
+              <div class="sub-grid-2">
+                <div>
+                  <h3 class="proc-subhead">効果（EFFECT）</h3>
+                  <p style="font-size:0.86rem;">効果はどう現れるか？ 障害に時計があるなら、<strong>効果レベルに等しい目盛り</strong>を進める。</p>
+                  <ol class="proc-list">
+                    <li><strong>限定的（Limited）</strong>：効果はどう削がれたか？ どんな大きな障害が残っているか？</li>
+                    <li><strong>標準（Standard）</strong>：期待通りの効果はどう現れるか？ 何かやり残しはあるか？</li>
+                    <li><strong>絶大（Great）</strong>：効果はどう増大したか？ どんな追加の恩恵が現れるか？</li>
+                  </ol>
+                </div>
+                <div>
+                  <h3 class="proc-subhead">効果の決定要素<span class="proc-subhead-en">EFFECT FACTORS</span></h3>
+                  <div class="factor-row"><span class="factor-sign">−</span><span>品質 / TIER</span><span class="factor-sign">+</span></div>
+                  <div class="factor-row"><span class="factor-sign">−</span><span>規模（SCALE）</span><span class="factor-sign">+</span></div>
+                  <div class="factor-row"><span class="factor-sign">−</span><span>効力（POTENCY）</span><span class="factor-sign">+</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Doskvol Notables, Districts/Locations/Pubs, Flashback/Attr, Engagement Roll -->
+          <div class="col-stack">
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">ダスクヴォールの著名人（DOSKVOL NOTABLES）</h2>
+                <span class="ref-badge">主要NPC</span>
+              </div>
+              <ul class="compact-list">
+                <li><strong>リッサ（Lyssa）</strong>：犯罪組織のボス。冷酷で計算高い。かつてのボス、ロリックを殺した。</li>
+                <li><strong>ディマー・シスターズ（The Dimmer Sisters）</strong>：新鮮な血を浴びる魔女だと噂される。自宅の外で姿を見た者はいない。</li>
+                <li><strong>ウルフ・アイアンボーン（Ulf Ironborn）</strong>：残忍なスコヴランド人；権力を渇望している。</li>
+                <li><strong>マイレラ・クレヴ（Mylera Klev）</strong>：レッド・サッシュのリーダー。美術収集家。</li>
+                <li><strong>バズソ・バズ（Baszo Baz）</strong>：ランブラックスのリーダー。ウイスキーを愛する。</li>
+                <li><strong>メリル・ブライム（Merrul Brime）</strong>：秘密の仲買人；「フードの狐亭」の店主。</li>
+                <li><strong>レディ・ドレイク（Lady Drake）</strong>：犯罪者たちから賄賂を受け取っている治安判事。</li>
+                <li><strong>塔（The Tower）</strong>：「見えざる者」の匿名の首領。<strong>星（The Star）</strong>：副官。<strong>グルル（Grull）</strong>：野心的な中堅の荒くれ者。</li>
+                <li><strong>モーディス（Mordis）</strong>：ナイトマーケットの商人。故買屋。ローブとフードの下に素顔を隠している。</li>
+                <li><strong>タファー（Taffer）</strong>：ナイトマーケットの商人。教団員。</li>
+                <li><strong>ジラ（Jira）</strong>：ナイトマーケットの商人。密輸業者。</li>
+                <li><strong>エルステラ・アヴラシ（Elstera Avrathi）</strong>：イルヴィアの駐在外交官。</li>
+                <li><strong>ブリンナ・スキルカラン（Brynna Skyrkallan）</strong>：スコヴランドの駐在外交官。</li>
+                <li><strong>ティルシン・ノル（Tyrsin Nol）</strong>：セヴェロスの駐在外交官。</li>
+                <li><strong>アンドリス（Andris）</strong>：忠誠心の定まらないスパイ兼情報屋。</li>
+                <li><strong>クロップ（Krop）</strong>：治安警備隊の巡査。賄賂を受け取らない。</li>
+                <li><strong>リュイット、ジョル、シンダ、レイフ（Lewit, Jol, Cinda, Reyf）</strong>：治安警備隊のブルーコートたち。</li>
+                <li><strong>アロン・ヘルカー（Alon Helker）</strong>：判事兼捜査官。腐敗を根絶しようとしている。</li>
+                <li><strong>キャスリン・モラ（Casslyn Mora）</strong>：犯罪者と家族的な繋がりを持つ判事。</li>
+                <li><strong>ベリンドラ（Belindra）</strong>：アイアンフック監獄の看守。</li>
+                <li><strong>エレス・スケイン（Ereth Skane）</strong>：見苦しい悪癖を持つ弁護士。</li>
+                <li><strong>デンカーク・ソル（Denkirk Sol）</strong>：驚くほど良心的な弁護士。</li>
+                <li><strong>ポリックス（Polix）</strong>：ダスクヴォール総督の随員。秘密の降霊術師かつルーン縛り手。</li>
+                <li><strong>ナイリックスとホクサン（Nyryx and Hoxan）</strong>：娼婦の肉体に憑依し、仕えるべきウィスパーを探している野良の霊。</li>
+                <li><strong>レヴィラ（Levyra）</strong>：霊媒師。</li>
+                <li><strong>ケンバー（Kember）</strong>：エッセンスと薬の蒸留師、「悪魔の歯亭」の主人。</li>
+                <li><strong>ラフェロ（Raffello）</strong>：超常現象に取り憑かれた名匠の画家。</li>
+                <li><strong>ラニック（Lannic）</strong>：熟練の美術贋作師。</li>
+              </ul>
+            </div>
+
+            <div class="three-col-grid">
+              <div class="action-ref-box">
+                <div class="action-ref-title">地区（富裕順）</div>
+                <ul class="action-ref-list">
+                  <li>ホワイトクラウン (Whitecrown)</li>
+                  <li>ブライトストーン (Brightstone)</li>
+                  <li>シックス・タワーズ (Six Towers)</li>
+                  <li>チャーターホール (Charterhall)</li>
+                  <li>ナイトマーケット (Nightmarket)</li>
+                  <li>シルクショア (Silkshore)</li>
+                  <li>コールリッジ (Coalridge)</li>
+                  <li>ザ・ドックス (The Docks)</li>
+                  <li>クロウズ・フット (Crow's Foot)</li>
+                  <li>ダンスラウ (Dunslough)</li>
+                  <li>バロウクレフト (Barrowcleft)</li>
+                  <li>チャーホロウ (Charhollow)</li>
+                </ul>
+              </div>
+              <div class="action-ref-box">
+                <div class="action-ref-title">名所・施設 (LOCATIONS)</div>
+                <ul class="action-ref-list">
+                  <li>アンダークロス (Undercross)</li>
+                  <li>残響庭園 (Echo Gardens)</li>
+                  <li>ナイトマーケット (The Night Market)</li>
+                  <li>運河網 (The Canals)</li>
+                  <li>チョーク通り橋 / キャンドル通り橋</li>
+                  <li>ガドック鉄道駅 (Gaddoc Rail Station)</li>
+                  <li>ハートブレイク広場 (Heartbreak Square)</li>
+                  <li>アンヴィルワークス (The Anvilworks)</li>
+                  <li>黒の環 (The Black Circle)</li>
+                  <li>ベルウェザー火葬場</li>
+                  <li>アイアンフック監獄</li>
+                  <li>血の闘技場 (The Blood Pits)</li>
+                  <li>失われた区画 (The Lost Ward)</li>
+                  <li>レイザーの丘 (Razor Hill)</li>
+                </ul>
+              </div>
+              <div class="action-ref-box">
+                <div class="action-ref-title">酒場・パブ (PUBLIC HOUSES)</div>
+                <ul class="action-ref-list">
+                  <li>フードの狐亭 (The Hooded Fox)</li>
+                  <li>鉤と糸亭 (The Hook &amp; Line)</li>
+                  <li>水漏れバケツ亭 (The Leaky Bucket)</li>
+                  <li>悪魔の歯亭 (The Devil's Tooth)</li>
+                  <li>黒木亭 (The Black Tree)</li>
+                  <li>猫と蝋燭亭 (The Cat &amp; Candle)</li>
+                  <li>折れた錨亭 (The Broken Anchor)</li>
+                  <li>赤ランプ亭 (The Red Lamp)</li>
+                  <li>釘と瓶亭 (The Nail &amp; Bottle)</li>
+                  <li>六本腕亭 (The Six Arms)</li>
+                  <li>古やすり亭 (The Old Rasp)</li>
+                  <li>月の娘亭 (The Moon's Daughter)</li>
+                  <li>堂守亭 (The Sexton)</li>
+                  <li>ヘイズルウッド (Hazlewood)</li>
+                  <li>クインズ (Quinn's)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="sub-grid-2">
+              <div class="action-ref-box">
+                <div class="action-ref-title">フラッシュバックのコスト</div>
+                <ul class="action-ref-list">
+                  <li><strong>0ストレス</strong>：容易に機会があったありふれた行動</li>
+                  <li><strong>1ストレス</strong>：複雑な行動、またはありそうもない機会</li>
+                  <li><strong>2+ストレス</strong>：特別な機会や万が一の備えを伴う手の込んだ行動</li>
+                </ul>
+              </div>
+              <div class="action-ref-box">
+                <div class="action-ref-title">属性と対応アクション</div>
+                <table class="ref-table" style="margin:0; font-size:0.78rem;">
+                  <thead><tr><th>洞察 (Insight)</th><th>胆力 (Prowess)</th><th>意志 (Resolve)</th></tr></thead>
+                  <tbody>
+                    <tr><td>狩猟 Hunt</td><td>手練 Finesse</td><td>霊視 Attune</td></tr>
+                    <tr><td>調査 Study</td><td>隠密 Prowl</td><td>威圧 Command</td></tr>
+                    <tr><td>観察 Survey</td><td>白兵 Skirmish</td><td>社交 Consort</td></tr>
+                    <tr><td>工作 Tinker</td><td>破壊 Wreck</td><td>説得 Sway</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">エンゲージメント・ロール（ENGAGEMENT ROLL）</h2>
+                <span class="ref-badge">導入判定</span>
+              </div>
+              <ul class="diamond-list">
+                <li>まず純粋な幸運として <strong>1d</strong> から始める。</li>
+                <li>この作戦は特に大胆不敵か？ <strong>+1d</strong>。多くの要素に左右され過度に複雑か？ <strong>-1d</strong>。</li>
+                <li>プランの詳細は標的の弱点を突いているか？ <strong>+1d</strong>。標的にはこのアプローチに対する特別な防衛や備えがあるか？ <strong>-1d</strong>。</li>
+                <li>友人や協力者が助力や知見を提供できるか？ <strong>+1d</strong>。敵やライバルが邪魔をしているか？ <strong>-1d</strong>。</li>
+                <li>他に考慮すべき要素はあるか？（Tier差、場所など）</li>
+              </ul>
+              <div class="outcome-box">
+                <h3 class="outcome-box-title">エンゲージメント・ロールの結果</h3>
+                <ul class="outcome-list">
+                  <li><span class="dice-tag">クリティカル</span>最初の障害をすでに乗り越えており、<strong>有利（controlled）</strong>なポジションで始まる。</li>
+                  <li><span class="dice-tag">6</span>アクション開始時、<strong>有利（controlled）</strong>なポジションにいる。</li>
+                  <li><span class="dice-tag">4/5</span>アクション開始時、<strong>危険（risky）</strong>なポジションにいる。</li>
+                  <li><span class="dice-tag">1-3</span>アクション開始時、<strong>絶望（desperate）</strong>なポジションにいる。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PAGE 1: SCOUNDREL MOVES ================= -->
+      <section class="sheet-section" id="page-1">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">プレイヤー指針</span>
+            <h1 class="sheet-title">悪党のムーブ<span class="sheet-title-en">SCOUNDREL MOVES</span></h1>
+          </div>
+          <div class="sheet-meta">BLADES IN THE DARK CORE PLAYSHEETS, V3</div>
+        </header>
+
+        <div class="two-col-grid">
+          <!-- Left Column: Cards -->
+          <div class="col-stack" id="p1-cards">
+            <article class="move-card">
+              <div class="move-card-header">
+                <span>目標を追求する</span>
+                <span class="move-card-en">PURSUE YOUR GOALS</span>
+              </div>
+              <div class="move-card-body">
+                <p>キャラクターが何かを行うときは、達成したい<strong>目標（ゴール）</strong>を言葉にして描写する。これによりGMは、どのような<strong>脅威（Threat）</strong>（もしあるなら）が危険な障害となり得るかを判断し、状況解決のための<strong>アクション・ロール（Action Roll）</strong>へとつなげられる。</p>
+              </div>
+            </article>
+
+            <article class="move-card">
+              <div class="move-card-header">
+                <span>大胆なアクションを実行する</span>
+                <span class="move-card-en">PERFORM DARING ACTIONS</span>
+              </div>
+              <div class="move-card-body">
+                <p>大胆な<strong>アクション（Action）</strong>を実行して脅威に立ち向かう。キャラクターシート上のアクション名を1つ用いてキャラクターの行動を語り、関連する詳細、有利な要素、ロールプレイを添える（これがロールの<strong>ポジション（Position）</strong>を決める助けとなる）。</p>
+              </div>
+            </article>
+
+            <div class="sub-grid-2">
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>ボーナス・ダイスを得る</span>
+                  <span class="move-card-en">GET A BONUS DIE</span>
+                </div>
+                <div class="move-card-body">
+                  <p><strong>2ストレス</strong>を記入する（無理をする／Push yourself）か、<strong>悪魔の取引（Devil's Bargain）</strong>を持ちかけることで、ロールにボーナス・ダイス（+1d）を得る。</p>
+                </div>
+              </article>
+
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>仲間を手助けする</span>
+                  <span class="move-card-en">HELP SOMEONE</span>
+                </div>
+                <div class="move-card-body">
+                  <p>どのように手助けするかを語り、<strong>1ストレス</strong>を記入して相手に<strong>+1d</strong>を与える。あるいは<strong>グループ・アクション（Group Action）</strong>を率いる。</p>
+                </div>
+              </article>
+
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>レジスタンス（抵抗判定）</span>
+                  <span class="move-card-en">RESISTANCE</span>
+                </div>
+                <div class="move-card-body">
+                  <p>代償を回避するため、<strong>洞察（Insight）</strong>、<strong>胆力（Prowess）</strong>、<strong>意志（Resolve）</strong>のいずれかでロールする。<strong>6マイナス出た最高のダイス目</strong>に等しいストレスを受ける。</p>
+                </div>
+              </article>
+
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>より大きな効果</span>
+                  <span class="move-card-en">GREATER EFFECT</span>
+                </div>
+                <div class="move-card-body">
+                  <p><strong>上質な（Fine）</strong>道具や武器を使う、<strong>無理をする（Push yourself）</strong>、あるいは<strong>立場と効果の交換（Trade position for effect）</strong>を行う。</p>
+                </div>
+              </article>
+            </div>
+
+            <article class="move-card">
+              <div class="move-card-header">
+                <span>フラッシュバック（回想）</span>
+                <span class="move-card-en">FLASHBACK</span>
+              </div>
+              <div class="move-card-body">
+                <p>現在の窮地を切り抜けるため、キャラクターが過去に仕込んでおいた粋な一手を発案する。GMは複雑さや込み入り具合に応じて<strong>0〜3ストレス</strong>を課す。危険が伴うならアクション・ロールを行う。</p>
+              </div>
+            </article>
+          </div>
+
+          <!-- Right Column: Detailed Guide -->
+          <div class="col-stack">
+            <div class="prose-block" id="p1-daring">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">大胆なアクションを実行する（PERFORM DARING ACTIONS）</h2>
+                <span class="ref-badge">Blades, p. 163</span>
+              </div>
+              <p>GMがあなたとキャラクターの目標との間に<strong>脅威（Threat）</strong>を登場させたとき、GMはどう対処するかを尋ねてくる。危険な障害に対処するためにキャラクターが何をするのか――キャラクターシートにある<strong>アクション（Action）</strong>の1つを動詞として織り込みながら描写しよう。関連すると思う詳細、有利な要素、ロールプレイもすべて盛り込むこと。</p>
+              <div class="quote-box">
+                「俺は彼女を<strong>《説得（Sway）》</strong>するよ。俺とクルーがこれまでどれだけ彼女を助けてきたか――特にあのビルホックス（Billhooks）との一件を持ち出すんだ。『コーラン（Coran）が肉切り包丁を持って追ってきたとき、誰が背中を守ってやった？ 借りがあるのはわかってるはずだ……』」
+              </div>
+              <p>このように行動を描写することで、アクションを単なる汎用的な「スキル」として「使う」といった問題から抜け出せる。あなたはただ、そのアクションそのものを実行していると語ればよいのだ。</p>
+            </div>
+
+            <div class="prose-block" id="p1-options">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">追加オプション（ADDITIONAL OPTIONS）</h2>
+                <span class="ref-badge">Blades, p. 20, 21, 32, 132</span>
+              </div>
+              <ul class="diamond-list">
+                <li>ロールに<strong>ボーナス・ダイス</strong>を得るには、<strong>無理をする（2ストレスを記入）</strong>か、<strong>悪魔の取引（Devil's Bargain）</strong>を求めることができる。</li>
+                <li><strong>誰かを手助けする</strong>には、<strong>1ストレス</strong>を記入して相手のロールに<strong>+1d</strong>を与える。どう手助けするかを語ること。</li>
+                <li>障害に対して<strong>グループを率いる（Group Action）</strong>には、どう率いるかを語ったうえで、全員が（あなたも含め）同じアクションをロールする。グループ全体の成果は最も良いロールを出した者の結果が採用される。ただし、リーダーであるあなたは、悪い結果（<strong>1-3</strong>）を出した仲間1人につき<strong>1ストレス</strong>を記入する。アクションを率いるために、自分がその分野で一番得意である必要はない。</li>
+                <li>悪い事態を回避するには、<strong>レジスタンス（抵抗）</strong>するとGMに告げる。何をロールするかはGMが指示する。多少のストレスは受けるが、その悪い結果は回避できる。代わりに（あるいは追加で）<strong>防具（Armor）</strong>を使うこともできる。</li>
+                <li>ロール時に障害に対して<strong>より大きな効果（Greater effect）</strong>を得るには、<strong>無理をする（2ストレスを記入）</strong>か、<strong>立場と効果の交換（Trade position for effect）</strong>をしたいとGMに伝える――より悪い代償を負う危険を冒す代わりに、より大きな影響力を得るのだ。効果を高める特殊な道具や武器を持っている場合もあるだろう。</li>
+                <li>苦境に陥ったときは、今の状況を有利に運ぶためにキャラクターが以前行っていた<strong>フラッシュバック（Flashback）</strong>を創作できる。GMは、そのフラッシュバックがどれほど込み入っているか、あるいは狡猾かに応じて<strong>0〜3ストレス</strong>を課す。</li>
+              </ul>
+              <p>ときに障害を乗り越えるには、クルーが複数のアクションを実行し、問題を段階的に切り崩していく必要がある。GMは進捗を追跡するための<strong>時計（Clock）</strong>を開始し、あとどれだけ残っているかをあなたが把握できるようにする。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="motto-bar">
+          <span class="motto-label">悪党の心得</span>
+          計画よりまず行動 — 危険に飛び込み、トラブルを愛せ — ストレスを使い倒せ — ずる賢く逃げない — 責任を引き受けろ — 理屈をこねて楽しさを逃すな — プレイの中で人物像を築け
+        </div>
+      </section>
+
+      <!-- ================= PAGE 2: GM MOVES ================= -->
+      <section class="sheet-section" id="page-2">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">GM指針</span>
+            <h1 class="sheet-title">GMのムーブ<span class="sheet-title-en">GM MOVES</span></h1>
+          </div>
+          <div class="sheet-meta">BLADES IN THE DARK CORE PLAYSHEETS, V3</div>
+        </header>
+
+        <div class="two-col-grid">
+          <!-- Left Column: GM Cards -->
+          <div class="col-stack" id="p2-cards">
+            <article class="move-card">
+              <div class="move-card-header">
+                <span>脅威を登場させる</span>
+                <span class="move-card-en">INTRODUCE A THREAT</span>
+              </div>
+              <div class="move-card-body">
+                <p>悪党が<strong>目標（Goal）</strong>を達成しようと行動するとき、立ちはだかる<strong>脅威（Threat）</strong>があるか自問する。あるならば、目の前の障害と危険を描写し、どう対処するか（すなわち、どの<strong>アクション</strong>を実行するか）を尋ねる。</p>
+              </div>
+            </article>
+
+            <article class="move-card">
+              <div class="move-card-header">
+                <span>……あるいはそのまま実行させる</span>
+                <span class="move-card-en">... OR LET THEM DO IT</span>
+              </div>
+              <div class="move-card-body">
+                <p>脅威がないのなら、悪党はただ意図したことを成し遂げる。<strong>アクション・ロールは行わない</strong>――その効果を描写するだけだ。彼らがそれ以上の成果を望むなら、達成のためにリスクを負うことで状況が危険へと<strong>転じる</strong>かもしれない。</p>
+              </div>
+            </article>
+
+            <article class="move-card">
+              <div class="move-card-header">
+                <span>……あるいはアクションでフォーチュン・ロールを行う</span>
+                <span class="move-card-en">... OR MAKE A FORTUNE ROLL USING AN ACTION</span>
+              </div>
+              <div class="move-card-body">
+                <p>危険のない状況でもどうしてもロールをしたい場合は、悪党のアクション・ドットを用いて<strong>フォーチュン・ロール（Fortune Roll）</strong>を行い、どれほど上手くやれたかを見る――結局のところ、彼らは有能な悪党なのだから。<strong>1-3</strong>：最低限の成果、<strong>4/5</strong>：良好、<strong>6</strong>：見事な出来、<strong>クリティカル</strong>：卓越した成果。</p>
+              </div>
+            </article>
+
+            <div class="sub-grid-2">
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>悪魔の取引</span>
+                  <span class="move-card-en">DEVIL'S BARGAIN</span>
+                </div>
+                <div class="move-card-body">
+                  <p><strong>悪魔の取引（Devil's Bargains）</strong>を提示することで、新たなひねり、厄介事、驚き、そして脅威を場にもたらす。</p>
+                </div>
+              </article>
+
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>より大きな効果</span>
+                  <span class="move-card-en">GREATER EFFECT</span>
+                </div>
+                <div class="move-card-body">
+                  <p>より悪い<strong>ポジション（Position）</strong>のリスクを引き受けるなら、悪党のアクションに<strong>より大きな効果（Greater effect）</strong>を提示する（あるいはその逆）。</p>
+                </div>
+              </article>
+            </div>
+
+            <article class="move-card">
+              <div class="move-card-header">
+                <span>時計を進める</span>
+                <span class="move-card-en">TICK THE CLOCKS</span>
+              </div>
+              <div class="move-card-body">
+                <p>多くの場合、良い代償とは即座に新たな脅威や負傷を与えることではなく、<strong>時計（Clock）</strong>を1目盛り進めることだ。差し迫ったトラブル、壊れた関係、新たな敵、その他の先行き不穏な問題を追跡するために時計を導入しよう。</p>
+              </div>
+            </article>
+          </div>
+
+          <!-- Right Column: Action Rolls Resolve Threats -->
+          <div class="col-stack">
+            <div class="prose-block" id="p2-action-roll">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">アクション・ロールは脅威を解決する（ACTION ROLLS RESOLVE THREATS）</h2>
+                <span class="ref-badge">Blades, p. 163, 164</span>
+              </div>
+              <p>『ブレイズ』では、他ゲームの一般的な「スキル判定」のようにタスク成否を決めるためだけにダイスを振らない。<strong>アクション・ロール（Action Roll）</strong>を使うのは、悪党の<strong>目標</strong>と<strong>脅威</strong>（立ちはだかる危険な障害、通常はNPC）との間に衝突があるときだけだ。そのロールは、双方にとって行動がどう決着するかを決定する。会話の流れにおける手順は次の通り：</p>
+              <ul class="diamond-list">
+                <li>プレイヤーが、目標を達成するために自分の悪党が何かを行う様子を描写する。</li>
+                <li><strong>行く手に脅威があるなら</strong>、GMはそれを登場させ、悪党がどう立ち向かうか（つまりどの<strong>アクション</strong>を実行するか）を尋ねる。</li>
+                <li>プレイヤーは、スタイルやロールプレイなどの詳細、さらに手持ちの有利な要素を添えて、脅威に対処するために悪党が実行する<strong>アクション</strong>を描写する。</li>
+                <li>GMは状況の詳細、実行されるアクション、プレイヤーの描写、そして脅威の強さを考慮し、ロールの<strong>ポジション（Position）</strong>と<strong>効果レベル（Effect level）</strong>を決定する。</li>
+              </ul>
+            </div>
+
+            <div class="flow-diagram" id="p2-flow" aria-label="会話と判定の流れの例">
+              <div class="flow-row">
+                <div class="flow-bubble player">
+                  「近くの屋根に登って、屋敷の中で何が起きているか覗いてみるよ。」
+                </div>
+                <div class="flow-label">◀ プレイヤーの目標<br>(PLAYER'S GOAL)</div>
+              </div>
+
+              <div class="flow-row gm-side">
+                <div class="flow-label">GMの脅威 ▶<br>(GM'S THREAT)</div>
+                <div class="flow-bubble gm">
+                  「君は雨樋をよじ登り、見張るのにちょうどいい場所を見つけた。だがこのあたりにはブルーコート（Bluecoat）の巡回隊がいる……気づかれるかもしれない。どうやって対処する？」
+                </div>
+              </div>
+
+              <div class="flow-row">
+                <div class="flow-bubble player">
+                  「煙突を遮蔽物にして、ゆっくり<strong>《隠密（Prowl）》</strong>するよ。それに<strong>上質な影マント（fine shadow cloak）</strong>も持っているし……」
+                </div>
+                <div class="flow-label">◀ プレイヤーのアクション＋詳細<br>(PLAYER'S ACTION + DETAILS)</div>
+              </div>
+
+              <div class="flow-row gm-side">
+                <div class="flow-label">ポジション＋効果 ▶<br>(POSITION + EFFECT)</div>
+                <div class="flow-bubble gm">
+                  「そのマントは間違いなく助けになるね！ それなら（「危険」ではなく）<strong>有利（Controlled）</strong>なアクション・ロールで、効果は<strong>標準（Standard）</strong>にしよう。」
+                </div>
+              </div>
+            </div>
+
+            <div class="prose-block">
+              <ul class="diamond-list">
+                <li><strong>行く手に脅威がないなら</strong>、GMは悪党の行動の効果を描写し、次のアクションと危険の機会へとシーンを進める。</li>
+              </ul>
+              <div class="quote-box">
+                「君は雨樋をよじ登り、見張るのにちょうどいい場所を見つけた。屋敷の中は暗い――ただしロウソクを手にした1人の使用人を除いては。おそらく就寝前に鍵などを確認して見回りをしているのだろう。仕掛けて押し入るかい？」
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="motto-bar">
+          <span class="motto-label">GMの指針</span>
+          質問を投げかける — 機会を提供する — 見せ場へ飛び込む — 危険の前兆を示す — 結末を貫徹する — NPCから行動を起こす — 代償を告げて問いかける — 画面外でも思考する
+        </div>
+      </section>
+
+      <!-- ================= PAGE 3: THREATS ================= -->
+      <section class="sheet-section" id="page-3">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">脅威一覧</span>
+            <h1 class="sheet-title">脅威一覧<span class="sheet-title-en">THREATS</span></h1>
+          </div>
+          <div class="sheet-meta">BLADES IN THE DARK CORE PLAYSHEETS, V3</div>
+        </header>
+
+        <div class="two-col-grid">
+          <!-- Left Column: Threat Categories -->
+          <div class="col-stack" id="p3-threats">
+            <p class="threat-intro">
+              GMが活用できる脅威のリストを状況別に整理し、影響の小さいものから大きいものへと順に並べた。<span class="clock-badge">時計向き</span> 印（原文イタリック体）の項目は、特に<strong>時計（Clocks）</strong>として扱うのに適している。
+            </p>
+
+            <div class="sub-grid-2">
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>緊迫の脅威</span>
+                  <span class="move-card-en">CHARGED THREATS</span>
+                </div>
+                <div class="move-card-body">
+                  <ul class="threat-list">
+                    <li>主導権を失う</li>
+                    <li>好機を逃す</li>
+                    <li class="threat-clock-item">時間切れが迫る<span class="clock-badge">時計向き</span></li>
+                    <li>出し抜かれる</li>
+                    <li>迫る危機に気づけない</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>怪異の脅威</span>
+                  <span class="move-card-en">STRANGE THREATS</span>
+                </div>
+                <div class="move-card-body">
+                  <ul class="threat-list">
+                    <li>幽霊の注意を引く</li>
+                    <li>エレクトロプラズムの逆流（Electroplasmic backlash）</li>
+                    <li>恐怖、パニック、硬直</li>
+                    <li class="threat-clock-item">スピリット・ワーデン（Spirit Wardens）に追跡される<span class="clock-badge">時計向き</span></li>
+                    <li>忘れられた神（Forgotten God）に苛まれる</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>警戒の脅威</span>
+                  <span class="move-card-en">SECURITY THREATS</span>
+                </div>
+                <div class="move-card-body">
+                  <ul class="threat-list">
+                    <li class="threat-clock-item">警戒レベルが上がる<span class="clock-badge">時計向き</span></li>
+                    <li>捜索され、追われる</li>
+                    <li class="threat-clock-item">ブルーコート／スピリット・ワーデンが到着する<span class="clock-badge">時計向き</span></li>
+                    <li>発見される、あるいは追跡される</li>
+                    <li class="threat-clock-item">追い詰められる、あるいは捕縛される<span class="clock-badge">時計向き</span></li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>奸計の脅威</span>
+                  <span class="move-card-en">TRICKY THREATS</span>
+                </div>
+                <div class="move-card-body">
+                  <ul class="threat-list">
+                    <li class="threat-clock-item">疑念・不信を招く<span class="clock-badge">時計向き</span></li>
+                    <li>混乱させられる、気を逸らされる</li>
+                    <li>嘘や欺瞞に引っかかる</li>
+                    <li>濡れ衣を着せられる、嵌められる</li>
+                    <li>待ち伏せに誘い込まれる</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>対人の脅威</span>
+                  <span class="move-card-en">SOCIAL THREATS</span>
+                </div>
+                <div class="move-card-body">
+                  <ul class="threat-list">
+                    <li>誰かの敬意を失う</li>
+                    <li class="threat-clock-item">人間関係にひびが入る<span class="clock-badge">時計向き</span></li>
+                    <li>気まずい失態を演じる</li>
+                    <li>出入り禁止になる、放り出される</li>
+                    <li class="threat-clock-item">敵を作る<span class="clock-badge">時計向き</span></li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="move-card">
+                <div class="move-card-header">
+                  <span>暴力の脅威</span>
+                  <span class="move-card-en">VIOLENT THREATS</span>
+                </div>
+                <div class="move-card-body">
+                  <ul class="threat-list">
+                    <li>武装解除される</li>
+                    <li>さらなる悪名（Heat）を買う</li>
+                    <li>軽度または中度の負傷（Harm）</li>
+                    <li>包囲される、あるいは捕縛される</li>
+                    <li>重度の負傷（Severe harm）、死</li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Right Column: Rules & Controlled Outcomes -->
+          <div class="col-stack" id="p3-rules">
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">通常は1回のロールで決着（ONE ROLL, USUALLY）</h2>
+                <span class="ref-badge">Blades, p. 24</span>
+              </div>
+              <p>ほとんどの脅威は1回のロールで解決する。しかし、悪党が相手より格下（実力差がある）場合、<strong>限定的効果（Limited effect）</strong>しか得られないことがある――つまり脅威が残り続けるか、望んだすべてを達成できない。完全に勝利したければ、再び危険を冒さなければならない。</p>
+              <div class="quote-box">
+                「奴は凄腕の剣士だ――まずは防御を突破し、そのあと別のアクションで負傷を与える必要がある。そしてどちらの行動でも負傷のリスクを負うことになる。」
+              </div>
+            </div>
+
+            <div class="prose-block">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">刻まれる時計（A TICKING CLOCK）</h2>
+                <span class="ref-badge">Blades, p. 16, 164</span>
+              </div>
+              <p>状況全体を覆う大きな脅威（ブルーコートが呼ばれる、悪党の正体が割れる、現行犯で見つかる、撃退される等）については、テーブル上に<strong>危険時計（Danger clock）</strong>を置いておくのが有効だ。</p>
+              <p>時計を進める（Ticking a clock）ことは、即座に負傷やトラブルを与えるよりも「柔らかい」脅威である。これにより、悪党たちの有能さが際立つ――たった1回の悪い出目で何もかも台無しにはならないのだ。</p>
+              <div class="quote-box">
+                たとえば、<strong>ラーク（Lurk）</strong>がブルーコートの巡回隊のそばを<strong>《隠密（Prowl）》</strong>で通り抜けようとしており、脅威が「警戒レベルが上がる」だったとしよう。プレイヤーが3を出したら、GMはこう告げる。「ブルーコートの1人が屋根の上を見上げて言う――『今、物音がしなかったか？』 <strong>警戒時計（Alert clock）</strong>を2目盛り進めるよ。まだ巡回隊をやり過ごせてはいない。《隠密》を続けるかい、それとも別の手を試すかい？」
+              </div>
+            </div>
+
+            <div class="prose-block" id="p3-controlled">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">「有利」ポジションの特殊性（THE CONTROLLED POSITION IS SPECIAL）</h2>
+                <span class="ref-badge">Blades, p. 23</span>
+              </div>
+              <p>悪党のポジションが<strong>有利（Controlled）</strong>であるとき、彼らはまだ脅威に直接晒されていない。これを反映し、4/5や1-3の出目の結果は他のポジションよりも緩やかになっている――<strong>危険（Risky）</strong>や<strong>絶望（Desperate）</strong>のロールのように即座に脅威が顕在化することはない。悪党には手を引いたり、やり直したりする余地が残されている――参照用に、下記の「有利」アクション・ロール結果を確認しよう。</p>
+
+              <div class="outcome-box">
+                <h3 class="outcome-box-title">有利（CONTROLLED）の判定結果</h3>
+                <ul class="outcome-list">
+                  <li>
+                    <span class="dice-tag">クリティカル</span>
+                    <strong>効果の増大（increased effect）</strong>を伴って成し遂げる。
+                  </li>
+                  <li>
+                    <span class="dice-tag">6</span>
+                    成し遂げる。
+                  </li>
+                  <li>
+                    <span class="dice-tag">4/5</span>
+                    ためらう。撤退して別のアプローチを試すか、あるいは<strong>軽微な代償（minor consequence）</strong>を伴ってやり遂げる：軽微な厄介事（minor complication）が起きる、<strong>効果の減少（reduced effect）</strong>を受ける、<strong>軽微な負傷（lesser harm）</strong>を負う、または<strong>危険（risky）</strong>なポジションに陥る。
+                  </li>
+                  <li>
+                    <span class="dice-tag">1-3</span>
+                    怯む。<strong>危険（risky）</strong>な好機に飛び込んで押し切るか、撤退して別のアプローチを試す。
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="doc-footer">
+        <span>出典：blades_core_playsheets_v3.pdf（ルルブ本体対訳準拠）</span>
+        <span>対訳表：blades_core_playsheets_v3_glossary.csv</span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const desktopBtn = document.getElementById('desktopThemeBtn');
+      const mobileBtn = document.getElementById('mobileThemeBtn');
+      const themeLabel = document.getElementById('themeLabel');
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      const menuBtn = document.getElementById('menuToggleBtn');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        themeLabel.textContent = theme === 'dark' ? 'DARK' : 'LIGHT';
+        try {
+          localStorage.setItem('bitd_playsheet_theme', theme);
+        } catch (e) {}
+      }
+
+      const savedTheme = (function () {
+        try {
+          return localStorage.getItem('bitd_playsheet_theme');
+        } catch (e) {
+          return null;
+        }
+      })();
+
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        applyTheme(savedTheme);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        applyTheme('dark');
+      } else {
+        applyTheme('light');
+      }
+
+      function toggleTheme() {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      }
+
+      desktopBtn.addEventListener('click', toggleTheme);
+      mobileBtn.addEventListener('click', toggleTheme);
+
+      function openSidebar() {
+        sidebar.classList.add('open');
+        backdrop.classList.add('open');
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        backdrop.classList.remove('open');
+      }
+
+      menuBtn.addEventListener('click', function () {
+        if (sidebar.classList.contains('open')) {
+          closeSidebar();
+        } else {
+          openSidebar();
+        }
+      });
+
+      backdrop.addEventListener('click', closeSidebar);
+
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.forEach(function (l) { l.classList.remove('active'); });
+          link.classList.add('active');
+          if (window.innerWidth <= 820) {
+            closeSidebar();
+          }
+        });
+      });
+
+      // Active section tracking on scroll
+      const targets = Array.from(document.querySelectorAll('[id^="page-"], [id^="p0-"], [id^="ref-"], [id^="p1-"], [id^="p2-"], [id^="p3-"]'));
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('id');
+              const matching = document.querySelector('.nav-link[href="#' + id + '"]');
+              if (matching) {
+                navLinks.forEach(function (l) { l.classList.remove('active'); });
+                matching.classList.add('active');
+              }
+            }
+          });
+        }, { rootMargin: '-15% 0px -70% 0px' });
+
+        targets.forEach(function (t) { observer.observe(t); });
+      }
+    })();
+  </script>
+</body>
+</html>
