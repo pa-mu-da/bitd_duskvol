@@ -836,6 +836,101 @@
       letter-spacing: 0.08em;
     }
 
+    /* Factions Table (Desktop table -> Mobile stacked cards, no swipe) */
+    .faction-cat-heading {
+      margin: 22px 0 8px;
+      padding: 6px 12px;
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      border-left: 4px solid var(--accent);
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .faction-cat-en {
+      font-size: 0.74rem;
+      font-weight: 500;
+      color: #B8B8B8;
+    }
+
+    .faction-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      margin-bottom: 14px;
+    }
+
+    .faction-table th,
+    .faction-table td {
+      border: 1px solid var(--border);
+      padding: 7px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .faction-table th {
+      background-color: var(--surface-alt);
+      color: var(--text);
+      font-weight: 900;
+      font-size: 0.78rem;
+      border-bottom: 2px solid var(--border-strong);
+    }
+
+    .faction-table tbody tr:nth-child(even) td {
+      background-color: var(--surface-alt);
+    }
+
+    .fac-name-jp {
+      font-weight: 700;
+      display: block;
+    }
+
+    .fac-name-en {
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .fac-tier-badge,
+    .fac-hold-badge {
+      display: inline-block;
+      padding: 1px 7px;
+      font-size: 0.76rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .fac-tier-badge {
+      background-color: var(--header-bg);
+      color: var(--header-text);
+    }
+
+    .fac-hold-badge.strong {
+      background-color: var(--surface-alt);
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+    }
+
+    .fac-hold-badge.weak {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+    }
+
+    .fac-mobile-label {
+      display: none;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-right: 4px;
+    }
+
     /* Page Footer */
     .doc-footer {
       margin-top: 24px;
@@ -941,6 +1036,49 @@
         min-width: 0;
         margin-bottom: 2px;
       }
+      .faction-table thead {
+        display: none;
+      }
+      .faction-table,
+      .faction-table tbody {
+        display: block;
+        width: 100%;
+      }
+      .faction-table tr {
+        display: block;
+        width: 100%;
+        border: 1px solid var(--border-strong);
+        background-color: var(--surface-alt);
+        padding: 10px 12px;
+        margin-bottom: 10px;
+      }
+      .faction-table tbody tr:nth-child(even) td {
+        background-color: transparent;
+      }
+      .faction-table td {
+        display: block;
+        border: none;
+        padding: 0;
+        background-color: transparent;
+      }
+      .faction-table td.fac-name {
+        margin-bottom: 6px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid var(--border);
+      }
+      .faction-table td.fac-tier,
+      .faction-table td.fac-hold {
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 6px;
+      }
+      .fac-mobile-label {
+        display: inline;
+      }
+      .faction-table td.fac-desc {
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
     }
   </style>
 </head>
@@ -998,6 +1136,14 @@
         <li><a class="nav-link nav-sublink" href="#p3-threats">状況別の脅威リスト</a></li>
         <li><a class="nav-link nav-sublink" href="#p3-rules">1ロール決着と時計の運用</a></li>
         <li><a class="nav-link nav-sublink" href="#p3-controlled">「有利」ポジションの判定結果</a></li>
+
+        <li class="nav-group-label">勢力一覧</li>
+        <li><a class="nav-link" href="#factions">全ファクション一覧 (Factions)</a></li>
+        <li><a class="nav-link nav-sublink" href="#fac-underworld">裏社会 (Underworld)</a></li>
+        <li><a class="nav-link nav-sublink" href="#fac-institutions">公的機関・制度 (Institutions)</a></li>
+        <li><a class="nav-link nav-sublink" href="#fac-labor">労働・商業組合 (Labor &amp; Trade)</a></li>
+        <li><a class="nav-link nav-sublink" href="#fac-citizenry">各地区の市民 (Citizenry)</a></li>
+        <li><a class="nav-link nav-sublink" href="#fac-fringe">周縁・異端勢力 (The Fringe)</a></li>
       </ul>
     </aside>
 
@@ -1197,8 +1343,39 @@
             </div>
           </div>
 
-          <!-- Right Column: Teamwork & Actions -->
+          <!-- Right Column: Position/Effect & Teamwork -->
           <div class="col-stack">
+            <div class="prose-block" id="ref-pos-eff">
+              <div class="prose-heading-row">
+                <h2 class="prose-heading">危険度（ポジション）と効果度（エフェクト）</h2>
+                <span class="ref-badge">POSITION &amp; EFFECT</span>
+              </div>
+              <p><strong>危険度（Position）</strong>は「代償がどれほど重いか」、<strong>効果度（Effect）</strong>は「成功時にどれだけ目標へ迫れるか（時計を何目盛り進められるか）」を表す。</p>
+
+              <div class="kv-row">
+                <div class="kv-key">危険度<span>POSITION</span></div>
+                <div class="kv-val">
+                  <strong>有利（Controlled）</strong>：主導権があり安全圏。代償は軽微でやり直しも効く。<br>
+                  <strong>危険（Risky）</strong>：標準。互角に渡り合い、相応のリスクを負う。<br>
+                  <strong>絶望（Desperate）</strong>：格上や窮地。代償は重いが、<strong>判定時に対応属性XP+1</strong>。
+                </div>
+              </div>
+
+              <div class="kv-row">
+                <div class="kv-key">効果度<span>EFFECT</span></div>
+                <div class="kv-val">
+                  <strong>絶大（Great / 3目盛り）</strong>：想定を上回る大成果・追加の恩恵。<br>
+                  <strong>標準（Standard / 2目盛り）</strong>：期待通りの十分な成果（基本）。<br>
+                  <strong>限定的（Limited / 1目盛り）</strong>：一部の成果のみ。障害が残る。<br>
+                  <strong>無効果（Zero / 0目盛り）</strong>：そのままでは通用しない。
+                </div>
+              </div>
+
+              <div class="quote-box">
+                <strong>効果を高める・調整するコツ：</strong>効果は<strong>品質（Tier）・規模（Scale）・効力（Potency）</strong>の優劣で上下する。<strong>無理をする（2ストレス）</strong>や上質な装備で効果を上げられるほか、GMと合意して<strong>「危険度を1段階下げる代わりに効果度を1段階上げる（立場と効果の交換）」</strong>こともできる。
+              </div>
+            </div>
+
             <div class="prose-block">
               <div class="prose-heading-row">
                 <h2 class="prose-heading">チームワーク（TEAMWORK）</h2>
@@ -1221,26 +1398,47 @@
                 <div class="kv-val">自分のアクションで別キャラクターのお膳立てをする。成功すれば、それに続くチームメイトは<strong>効果+1段階</strong>または<strong>ポジション改善</strong>を得る。</div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <div class="prose-block">
-              <div class="prose-heading-row">
-                <h2 class="prose-heading">アクション一覧（ACTIONS）</h2>
-                <span class="ref-badge">12種の行動</span>
+        <div class="prose-block" style="margin-top: 26px;">
+          <div class="prose-heading-row">
+            <h2 class="prose-heading">アクション一覧（ACTIONS）</h2>
+            <span class="ref-badge">12種の行動</span>
+          </div>
+          <div class="three-col-grid">
+            <div class="move-card">
+              <div class="move-card-header"><span>洞察系アクション</span><span class="move-card-en">INSIGHT</span></div>
+              <div class="move-card-body">
+                <ul class="diamond-list" style="margin:0;">
+                  <li><strong>《狩猟（Hunt）》</strong>：標的を追跡する。位置や動向の情報を集める。遠距離から精密な射撃攻撃を行う。</li>
+                  <li><strong>《調査（Study）》</strong>：人物・文書・物品を精密に精査して情報を集め、知識を応用する。深い理解を得る。調査研究を行う。</li>
+                  <li><strong>《観察（Survey）》</strong>：場所や状況を観察して何が起きているかを把握する。危険が起きる前に察知する。好機や弱点を探る。</li>
+                  <li style="margin-bottom:0;"><strong>《工作（Tinker）》</strong>：機械仕掛けを製作・改造・無力化・修理する。罠解除や開錠、ぜんまい仕掛けやエレクトロプラズム装置を活用する。</li>
+                </ul>
               </div>
-              <ul class="diamond-list">
-                <li><strong>《霊視（Attune）》</strong>：霊やゴースト・フィールドに同調する。エレクトロプラズムのエネルギーを操る。幽霊を知覚し意思疎通する。霊光科学（スペクトロロジー）を理解する。</li>
-                <li><strong>《威圧／指揮（Command）》</strong>：人格の力で服従を強いる。脅迫や威嚇を行う。クルーのギャングを率いて行動する。</li>
-                <li><strong>《社交（Consort）》</strong>：出身・経歴・友人・ライバルといった人脈と交わり、資源・情報・人物・場所へのアクセスを得る。</li>
-                <li><strong>《手練（Finesse）》</strong>：誰かの懐から物をすり取る。巧妙な目くらましや手先の早業を使う。乗り物や騎乗動物を操る。</li>
-                <li><strong>《狩猟（Hunt）》</strong>：標的を追跡する。位置や動向の情報を集める。遠距離から精密な射撃攻撃を行う。</li>
-                <li><strong>《隠密（Prowl）》</strong>：人目につかず忍び歩き、障害物を越える。登攀・水泳・疾走・跳躍・受け身を行う。不意打ちの近接暴力（闇討ち、喉切り、ブラックジャック等）を仕掛ける。</li>
-                <li><strong>《白兵（Skirmish）》</strong>：近接戦闘で敵と渡り合う。突撃する、あるいは防衛線を維持する。乱闘や組み打ちを行う。</li>
-                <li><strong>《調査（Study）》</strong>：人物・文書・物品を精密に精査して情報を集め、知識を応用する。深い理解を得る。調査研究を行う。</li>
-                <li><strong>《観察（Survey）》</strong>：場所や状況を観察して何が起きているかを把握する。危険が起きる前に察知する。好機や弱点についての情報を集める。</li>
-                <li><strong>《説得（Sway）》</strong>：魅力・論理・欺瞞・変装・ハッタリで誰かを動かす。人心操作や誘惑によって態度や行動を変えさせる。</li>
-                <li><strong>《工作（Tinker）》</strong>：機械仕掛けを製作・改造・無力化・修理する。罠を解除し、錠前や金庫を開ける。街中のありふれたぜんまい仕掛けやエレクトロプラズム装置を自分の有利に使う。</li>
-                <li><strong>《破壊（Wreck）》</strong>：荒々しい腕力または計算された破壊工作で場所・物品・障害物を打ち壊す。力ずくで防壁を突破する。陽動や混乱を生み出す。</li>
-              </ul>
+            </div>
+            <div class="move-card">
+              <div class="move-card-header"><span>胆力系アクション</span><span class="move-card-en">PROWESS</span></div>
+              <div class="move-card-body">
+                <ul class="diamond-list" style="margin:0;">
+                  <li><strong>《手練（Finesse）》</strong>：誰かの懐から物をすり取る。巧妙な目くらましや手先の早業を使う。乗り物や騎乗動物を操る。</li>
+                  <li><strong>《隠密（Prowl）》</strong>：人目につかず忍び歩き、障害物を越える。登攀・水泳・疾走・跳躍・受け身。闇討ちなど不意打ちの近接暴力。</li>
+                  <li><strong>《白兵（Skirmish）》</strong>：近接戦闘で敵と渡り合う。突撃する、あるいは防衛線を維持する。乱闘や組み打ちを行う。</li>
+                  <li style="margin-bottom:0;"><strong>《破壊（Wreck）》</strong>：荒々しい腕力または計算された破壊工作で場所・物品・障害物を打ち壊す。力ずくの突破や陽動・混乱を起こす。</li>
+                </ul>
+              </div>
+            </div>
+            <div class="move-card">
+              <div class="move-card-header"><span>意志系アクション</span><span class="move-card-en">RESOLVE</span></div>
+              <div class="move-card-body">
+                <ul class="diamond-list" style="margin:0;">
+                  <li><strong>《霊視（Attune）》</strong>：霊やゴースト・フィールドに同調する。エレクトロプラズムを操り、幽霊を知覚し意思疎通する。</li>
+                  <li><strong>《威圧／指揮（Command）》</strong>：人格の力で服従を強いる。脅迫や威嚇を行う。クルーのギャングを率いて行動する。</li>
+                  <li><strong>《社交（Consort）》</strong>：出身・経歴・友人・ライバルといった人脈と交わり、資源・情報・人物・場所へのアクセスを得る。</li>
+                  <li style="margin-bottom:0;"><strong>《説得（Sway）》</strong>：魅力・論理・欺瞞・変装・ハッタリで誰かを動かす。人心操作や誘惑によって態度や行動を変えさせる。</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -2084,6 +2282,131 @@
         </div>
       </section>
 
+      <!-- ================= FACTIONS OF DOSKVOL ================= -->
+      <section class="sheet-section" id="factions">
+        <header class="sheet-header">
+          <div class="sheet-title-wrap">
+            <span class="sheet-page-tag">勢力一覧</span>
+            <h1 class="sheet-title">ダスクヴォールの全ファクション<span class="sheet-title-en">FACTIONS OF DOSKVOL</span></h1>
+          </div>
+          <div class="sheet-meta">BLADES IN THE DARK SHEETS, v8.2 / ルルブ p.283–284</div>
+        </header>
+
+        <div class="quote-box" style="margin-top:0; margin-bottom:20px;">
+          <strong>抗争（War / 関係値 -3）時のペナルティ：</strong>維持力（Hold）を一時的に1失う（階級が下がる場合あり）／自由ダウンタイム行動が2回→1回に減少／スコア毎の悪名+1／収益系主張（悪徳の巣窟・闘技場・故買屋等）の収入が半減（端数切捨）。
+        </div>
+
+        <!-- 1. UNDERWORLD -->
+        <h2 class="faction-cat-heading" id="fac-underworld"><span>裏社会（16勢力）</span><span class="faction-cat-en">UNDERWORLD</span></h2>
+        <table class="faction-table">
+          <thead>
+            <tr><th style="width:28%;">名前</th><th style="width:8%;">階級</th><th style="width:10%;">維持</th><th>概要</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="fac-name"><span class="fac-name-jp">ジ・アンシーン</span><span class="fac-name-en">The Unseen</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">IV</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">構成員が秘密にされた狡猾な犯罪組織。裏社会全体の糸を裏で操っていると目される。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・ハイヴ</span><span class="fac-name-en">The Hive</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">IV</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">黄金の蜂を紋章とし、密かに禁制品の取引を行う大商人たちの秘密ギルド。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・サークル・オブ・フレイム</span><span class="fac-name-en">The Circle of Flame</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">好古家と学者の秘密結社。恐喝・汚職・悪徳・殺人の隠れ蓑となっている。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・シルバー・ネイルズ</span><span class="fac-name-en">The Silver Nails</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">統一戦争後に犯罪稼業へ転じたセヴェロス人傭兵団。名うての幽霊殺しとして知られる。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ロード・スカーロック</span><span class="fac-name-en">Lord Scurlock</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">皇帝と同様の不死身とも吸血鬼とも噂される古の貴族。秘術の秘密に取り憑かれている。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・クロウズ</span><span class="fac-name-en">The Crows</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">リッサが新たに率いる古参ギャング。違法賭博場とみかじめ料の恐喝を仕切る。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・ランブラックス</span><span class="fac-name-en">The Lampblacks</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">電灯の普及で職を失い、犯罪組織へと転身した元・街灯点けギルド。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・レッド・サッシュ</span><span class="fac-name-en">The Red Sashes</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">元はイルヴィア剣術の道場だったが、麻薬取引などの犯罪事業へと手を広げた勢力。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・ディマー・シスターズ</span><span class="fac-name-en">The Dimmer Sisters</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">オカルト的な悪評を持ち、屋敷に引きこもって暮らす謎の隠遁姉妹。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・グライダーズ</span><span class="fac-name-en">The Grinders</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">スコヴランド出身の元港湾労働者やリヴァイアサン血精製所工員による凶暴なギャング。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・ビルホックス</span><span class="fac-name-en">The Billhooks</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">手斧と肉鉤を振るう、荒っぽく残虐な悪党たちのギャング。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・レイス</span><span class="fac-name-en">The Wraiths</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">仮面をつけた謎めいた盗賊とスパイのクルー。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・グレイ・クロークス</span><span class="fac-name-en">The Gray Cloaks</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">犯罪の道へ転じた元ブルーコート（治安警備隊員）たちの集団。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ウルフ・アイアンボーン</span><span class="fac-name-en">Ulf Ironborn</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">I</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">ダスクヴォールへ来たばかりの残忍なスコヴランド人。縄張りを巡り誰彼構わず戦う。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・フォグ・ハウンズ</span><span class="fac-name-en">The Fog Hounds</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">I</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">パトロンを求めている荒くれ者の密輸業者クルー。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・ロスト</span><span class="fac-name-en">The Lost</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">I</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">虐げられた者や希望を失った者を守るために戦う、街の荒くれ者と元兵士の集団。</td></tr>
+          </tbody>
+        </table>
+
+        <!-- 2. INSTITUTIONS -->
+        <h2 class="faction-cat-heading" id="fac-institutions"><span>公的機関・制度（14勢力）</span><span class="faction-cat-en">INSTITUTIONS</span></h2>
+        <table class="faction-table">
+          <thead>
+            <tr><th style="width:28%;">名前</th><th style="width:8%;">階級</th><th style="width:10%;">維持</th><th>概要</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="fac-name"><span class="fac-name-jp">インペリアル・ミリタリー</span><span class="fac-name-en">Imperial Military</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">VI</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">ダスクヴォールに駐留する帝国軍。ガドック駅・駆逐艦パラゴン・総督要塞に約250名を配備。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">シティ・カウンシル</span><span class="fac-name-en">City Council</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">V</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">市政を統治するエリート貴族たち（市議会）。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ミニストリー・オブ・プリザベーション</span><span class="fac-name-en">Ministry of Preservation</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">V</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">都市間の全輸送と食糧・重要物資の配給を管轄する帝国省庁（保全省）。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">リヴァイアサン・ハンターズ</span><span class="fac-name-en">Leviathan Hunters</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">V</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">虚無の海の巨獣と組み合い、エレクトロプラズム原料となる血を採取する大胆不敵な船団。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">アイアンフック・プリズン</span><span class="fac-name-en">Ironhook Prison</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">IV</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">多くの悪党が生涯の大半を過ごす鉄の監獄。壁の内側でも複数の犯罪組織が運営されている。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">スパークライツ</span><span class="fac-name-en">Sparkwrights</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">IV</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">雷撃障壁を維持管理する技師団。危険な研究に手を染めつつ新技術を開拓している。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">スピリット・ワーデンズ</span><span class="fac-name-en">Spirit Wardens</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">IV</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">野良の霊を滅ぼす青銅仮面の狩人。ベルウェザー火葬場を運営し、デスランズの遺物も研究する。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ブルーコーツ</span><span class="fac-name-en">Bluecoats</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">法を守るはずの市警備隊。腐敗し暴力的で残酷な「街で一番タチの悪いギャング」として知られる。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">インスペクターズ</span><span class="fac-name-en">Inspectors</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">市警備隊の犯罪捜査官。倫理観と清廉さで知られ（誰にも好かれない）、治安判事へ起訴証拠を提出する。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">イルヴィアン・コンスレイト</span><span class="fac-name-en">Iruvian Consulate</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">イルヴィア領事館。帝国南方の砂漠の王国イルヴィアの外交・諜報・利権拠点。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">スコヴラン・コンスレイト</span><span class="fac-name-en">Skovlan Consulate</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">スコヴランド領事館。統一戦争で帝国に併合された北方の旧王国を代表する外交機関。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・ブリゲイド</span><span class="fac-name-en">The Brigade</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">街の消防隊（別名サリーズ）。人命救助の英雄として敬われる一方、略奪や恐喝でも悪名高い。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">セヴェロシ・コンスレイト</span><span class="fac-name-en">Severosi Consulate</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">I</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">セヴェロス領事館。騎馬民族と精霊狩りの大地セヴェロスの外交窓口。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ダガー・アイルズ・コンスレイト</span><span class="fac-name-en">Dagger Isles Consulate</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">I</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">ダガー諸島領事館。南洋の海賊・交易民が暮らすダガー諸島の外交窓口。</td></tr>
+          </tbody>
+        </table>
+
+        <!-- 3. LABOR & TRADE -->
+        <h2 class="faction-cat-heading" id="fac-labor"><span>労働・商業組合（10勢力）</span><span class="faction-cat-en">LABOR &amp; TRADE</span></h2>
+        <table class="faction-table">
+          <thead>
+            <tr><th style="width:28%;">名前</th><th style="width:8%;">階級</th><th style="width:10%;">維持</th><th>概要</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・ファウンデーション</span><span class="fac-name-en">The Foundation</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">IV</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">古より続く強大な建築家・建設業者の結社。彼らの敵の多くはダスクヴォールの壁の奥へ消えた。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ドッカーズ</span><span class="fac-name-en">Dockers</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">ザ・ドックスで荷役を担う屈強な港湾労働者たちの組合。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ゴンドリアーズ</span><span class="fac-name-en">Gondoliers</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">古い伝統により敬われる運河の船頭ギルド。水底に沈むオカルトの秘密を知ると囁かれる。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">セイラーズ</span><span class="fac-name-en">Sailors</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">商船および帝国海軍艦艇の船長と船員たち。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">レイバラーズ</span><span class="fac-name-en">Laborers</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">街の工場・炭鉱・建設現場を支える一般労働者層。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">キャビーズ</span><span class="fac-name-en">Cabbies</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">公営辻馬車の御者組合。牽引用の大型アコロスヤギの繁殖も行い、凄まじい噂話網を持つ。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">サイファーズ</span><span class="fac-name-en">Cyphers</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">街の伝令ギルド。書簡の内容も依頼主の素性も決して漏らさぬと神聖な誓いを立てている（建前上は）。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">インク・レイクス</span><span class="fac-name-en">Ink Rakes</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">ダスクヴォールの新聞記者・スキャンダル暴露屋・新聞発行人たち。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">レイル・ジャックス</span><span class="fac-name-en">Rail Jacks</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">デスランズの凶暴な霊から帝国の電鉄を守る警備員たち。最近、組合結成の動きを見せている。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">サーヴァンツ</span><span class="fac-name-en">Servants</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">貴族や富裕層の屋敷に仕える使用人・執事・メイドたちのネットワーク。</td></tr>
+          </tbody>
+        </table>
+
+        <!-- 4. CITIZENRY -->
+        <h2 class="faction-cat-heading" id="fac-citizenry"><span>各地区の市民（12勢力）</span><span class="faction-cat-en">CITIZENRY</span></h2>
+        <table class="faction-table">
+          <thead>
+            <tr><th style="width:28%;">名前</th><th style="width:8%;">階級</th><th style="width:10%;">維持</th><th>概要</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="fac-name"><span class="fac-name-jp">ホワイトクラウン</span><span class="fac-name-en">Whitecrown</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">V</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">総督府・最高貴族・ダスクヴォール学院が置かれた隔絶された島区の住民。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ブライトストーン</span><span class="fac-name-en">Brightstone</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">IV</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">市内で最も裕福かつ影響力のある貴族・大富豪が集う高級住宅街の住民。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">チャーターホール</span><span class="fac-name-en">Charterhall</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">IV</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">行政機関・裁判所・大学が集まる官庁・学園区の役人や学生・実業家たち。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">シックス・タワーズ</span><span class="fac-name-en">Six Towers</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">没落した旧貴族の廃墟と不法占拠者が混在する、幽霊の出やすい地区の住民。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">シルクショア</span><span class="fac-name-en">Silkshore</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">無数の運河が巡り、娼館や劇場・芸術家がひしめく赤ランプ歓楽街の住民。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ナイトマーケット</span><span class="fac-name-en">Nightmarket</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">貨物駅に隣接し、希少品や闇市取引で栄える新興エリート商業区の住民。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">クロウズ・フット</span><span class="fac-name-en">Crow's Foot</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">諸地区の要素が交差し、ギャング抗争が絶えない雑多な交差点地区の住民。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・ドックス</span><span class="fac-name-en">The Docks</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">貨物船とリヴァイアサン・ハンター船が発着する古き港湾地区の住民。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">バロウクレフト</span><span class="fac-name-en">Barrowcleft</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">放射エネルギー農場で街の食糧を支える、結束の固い農民氏族の住民。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">コールリッジ</span><span class="fac-name-en">Coalridge</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">煤煙と高架線路に覆われた炭鉱・重工業地帯に暮らす労働者たち。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">チャーホロウ</span><span class="fac-name-en">Charhollow</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">I</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">狭苦しいが相互扶助と家族的連帯感で結ばれた労働者密集区の住民。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ダンスラウ</span><span class="fac-name-en">Dunslough</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">I</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">アイアンフック監獄と「泥沼」の傍らで極貧にあえぐゲットーの住民。</td></tr>
+          </tbody>
+        </table>
+
+        <!-- 5. THE FRINGE -->
+        <h2 class="faction-cat-heading" id="fac-fringe"><span>周縁・異端勢力（8勢力）</span><span class="faction-cat-en">THE FRINGE</span></h2>
+        <table class="faction-table">
+          <thead>
+            <tr><th style="width:28%;">名前</th><th style="width:8%;">階級</th><th style="width:10%;">維持</th><th>概要</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・チャーチ・オブ・エクスタシー</span><span class="fac-name-en">The Church of Ecstasy</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">IV</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">肉体の生を賛美し霊界を忌み嫌う事実上の「国教」だが、実態は秘密結社（肉体の歓喜の教会）。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・ホード</span><span class="fac-name-en">The Horde</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">未知の力に操られ、何らかの凶悪な目的のもと一丸となって動くホロウ（虚ろ者）の群れ。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・パス・オブ・エコーズ</span><span class="fac-name-en">The Path of Echoes</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">霊魂法への公然たる反逆に近い神秘教団。古代を崇拝し、幽霊との交信を通じて過去の知識を求める。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・フォゴットン・ゴッズ</span><span class="fac-name-en">The Forgotten Gods</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">大災厄以前の古い流儀に従い、悪魔やさらに暗い存在に仕える小規模教団群（個々は階級I〜II）。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・リコンサイルド</span><span class="fac-name-en">The Reconciled</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">時の経過によっても狂気や野性に堕ちなかった理知ある幽霊たちの結社。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">スコヴランダー・レフュジーズ</span><span class="fac-name-en">Skovlander Refugees</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">III</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">統一戦争の絶望的な生き残りたち。他の道を閉ざされ、生きるため犯罪に手を染めざるを得ない。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">ザ・ウィーピング・レディ</span><span class="fac-name-en">The Weeping Lady</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge strong">強 (S)</span></td><td class="fac-desc">貧者の味方と称えられる初代総督レディ・デヴェラを讃える慈善団体兼疑似宗教。</td></tr>
+            <tr><td class="fac-name"><span class="fac-name-jp">デスランズ・スカベンジャーズ</span><span class="fac-name-en">Deathlands Scavengers</span></td><td class="fac-tier"><span class="fac-mobile-label">階級</span><span class="fac-tier-badge">II</span></td><td class="fac-hold"><span class="fac-mobile-label">維持</span><span class="fac-hold-badge weak">弱 (W)</span></td><td class="fac-desc">雷撃障壁の外の荒野を徘徊する、アイアンフックの囚人や命知らずのフリーランスたち。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
       <footer class="doc-footer">
         <span>出典：blades_core_playsheets_v3.pdf（ルルブ本体対訳準拠）</span>
         <span>対訳表：blades_core_playsheets_v3_glossary.csv</span>
@@ -2165,7 +2488,7 @@
       });
 
       // Active section tracking on scroll
-      const targets = Array.from(document.querySelectorAll('[id^="page-"], [id^="p0-"], [id^="ref-"], [id^="p1-"], [id^="p2-"], [id^="p3-"]'));
+      const targets = Array.from(document.querySelectorAll('[id^="page-"], [id^="p0-"], [id^="ref-"], [id^="p1-"], [id^="p2-"], [id^="p3-"], #factions, [id^="fac-"]'));
       if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
